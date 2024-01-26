@@ -1,0 +1,16 @@
+**Directory:** `perfdata`
+The `perfdata` directory contains important data related to the performance analysis of the parallel histogram program. This directory includes:
+
+1. `performance_recording.xlsx`: A spreadsheet containing the recorded runtimes for each trial, along with the calculated speedup and efficiency values. This file helps in tracking the performance of the parallel histogram program across multiple runs and configurations.
+
+2. `input.txt`: A text file containing the necessary input parameters for running a trial of the parallel histogram program. The file consists of 4 lines, each containing a single number:
+
+* Line 1: Number of bins
+* Line 2: Minimum measurement
+* Line 3: Maximum measurement
+* Line 4: Dataset size
+The `input.txt` file is used to provide consistent input parameters for each trial.
+
+3. `output.txt`: A text file that stores the output of a trial run of the parallel histogram program. The output includes the printed histogram and the maximum elapsed time for that trial. We only consider the maximum elapsed time for recording in the `performance_recording.xlsx` file, as it represents the overall execution time determined by the slowest process in the parallel program.
+
+To perform a performance analysis, simply run the parallel histogram program with the desired configurations, using the `input.txt` file for providing input parameters, and save the output to the `output.txt file`. After each trial, update the `performance_recording.xlsx` file with the maximum elapsed time obtained from the `output.txt` file. This process helps track the progress and performance of the parallel histogram program.

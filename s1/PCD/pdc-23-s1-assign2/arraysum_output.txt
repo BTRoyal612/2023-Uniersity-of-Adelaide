@@ -1,0 +1,2 @@
+Sequential sum: 499500
+Parallel sum: 499500

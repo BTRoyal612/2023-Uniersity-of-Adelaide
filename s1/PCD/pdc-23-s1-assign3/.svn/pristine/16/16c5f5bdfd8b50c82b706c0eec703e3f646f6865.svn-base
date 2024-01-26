@@ -1,0 +1,17 @@
+Number of threads = 4
+Hello from thread 0 of 4
+Hello from thread 1 of 4
+Hello from thread 2 of 4
+Hello from thread 3 of 4
+
+Number of threads = 4
+Hello from thread 0 of 4
+Hello from thread 1 of 4
+Hello from thread 2 of 4
+Hello from thread 3 of 4
+
+Number of threads = 4
+Hello from thread 0 of 4
+Hello from thread 1 of 4
+Hello from thread 2 of 4
+Hello from thread 3 of 4
