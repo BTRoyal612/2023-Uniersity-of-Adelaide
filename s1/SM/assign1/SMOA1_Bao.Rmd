@@ -1,0 +1,337 @@
+---
+title: |
+  | Statistical Modelling III
+  | Assignment 1
+author: "Gia Bao Hoang - a1814824"
+date: Semester 1 2023
+output: pdf_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(
+  echo = TRUE, 
+  fig.width = 6, 
+  fig.asp = 0.618, 
+  out.width = "70%",
+  fig.align = "center", 
+  root.dir = "../"
+)
+
+```
+
+# Q1
+### a)
+  The model matrix:
+$$
+  X = 
+  \begin{bmatrix}
+    1 & 1 & 0 & 0 & -1 & 0 & 0\\
+    1 & 0 & 1 & 0 & 0 & -1 & 0\\
+    1 & 0 & 0 & 1 & 0 & 0 & -1\\
+    1 & 0 & -1 & 0 & 1 & 0 & 0\\
+    1 & 0 & 0 & -1 & 0 & 1 & 0\\
+    1 & -1 & 0 & 0 & 0 & 0 & 1\\
+    1 & 1 & 0 & 0 & 0 & -1 & 0\\
+    1 & 0 & 1 & 0 & 0 & 0 & -1\\
+    1 & 0 & 0 & 1 & -1 & 0 & 0\\
+    1 & 0 & 0 & -1 & 1 & 0 & 0\\
+    1 & -1 & 0 & 0 & 0 & 1 & 0\\
+    1 & 0 & -1 & 0 & 0 & 0 & 1
+  \end{bmatrix}
+$$
+
+### b)
+  Let $v_0,v_1,v_2,v_3,v_4,v_5,v_6$ be the columns of X and $c_1,c_2,c_3,c_4,c_5,c_6$
+be constants.
+ 
+  We have:
+$$
+  c_1v_1+c_2v_2+c_3v_3+c_1v_4+c_5v_5+c_6v_6
+$$
+
+  If $c_1=c_2=c_3=c_4=c_5=c_6=1$, then:
+$$  
+  \begin{aligned}
+    c_1v_1+c_2v_2+c_3v_3+c_1v_4+c_5v_5+c_6v_6 &=v_1+v_2+v_3+v_4+v_5+v_6\\
+                                              &=\begin{pmatrix}1\\0\\0\\0\\0\\-1\\1\\0\\0\\0\\-1\\0\end{pmatrix}+
+                                                \begin{pmatrix}0\\1\\0\\-1\\0\\0\\0\\1\\0\\0\\0\\-1\end{pmatrix}+
+                                                \begin{pmatrix}0\\0\\1\\0\\-1\\0\\0\\0\\1\\-1\\0\\0\end{pmatrix}+
+                                                \begin{pmatrix}-1\\0\\0\\1\\0\\0\\0\\0\\-1\\1\\0\\0\end{pmatrix}+
+                                                \begin{pmatrix}0\\-1\\0\\0\\1\\0\\-1\\0\\0\\0\\1\\0\end{pmatrix}+
+                                                \begin{pmatrix}0\\0\\-1\\0\\0\\1\\0\\-1\\0\\0\\0\\1\end{pmatrix}
+                                              &=\begin{pmatrix}0\\0\\0\\0\\0\\0\\0\\0\\0\\0\\0\\0\end{pmatrix}
+  \end{aligned}
+$$
+  
+  $\therefore$ The columns of X are not linearly independent.
+ 
+  In addition, this can also be shown through the formula.
+  
+  Let $v_1 = (\mu, \alpha_1, \alpha_2,...,\alpha_6)$. With $Xv_1$ have:
+$$
+  \begin{aligned}
+    y_{ijk} &=\mu+\alpha_i-\alpha_j+e_{ijk}\\
+            &=\mu+\alpha_i-\alpha_j+e_{ijk}+1-1\\
+            &=\mu+(\alpha_i+1)-(\alpha_j+1)+e_{ijk}\\
+  \end{aligned}
+$$
+  
+  And with $Xv_2$ where $v_2=(\mu,\alpha_1 + 1,\alpha_2 + 1,...,\alpha_6 + 1)$,
+we can produce $\mu+(\alpha_i+1)-(\alpha_j+1)+e_{ijk}$
+  
+  $\therefore Xv_1=Xv_2$
+  
+  $\therefore$ The columns of X are not linearly independent.
+ 
+### c)
+  If $\alpha_1=0$, we do not estimate $\alpha_1$ anymore. Hence, we can remove
+the second column of X. The new design matrix X:
+$$
+  X = 
+  \begin{bmatrix}
+    1 & 0 & 0 & -1 & 0 & 0\\
+    1 & 1 & 0 & 0 & -1 & 0\\
+    1 & 0 & 1 & 0 & 0 & -1\\
+    1 & -1 & 0 & 1 & 0 & 0\\
+    1 & 0 & -1 & 0 & 1 & 0\\
+    1 & 0 & 0 & 0 & 0 & 1\\
+    1 & 0 & 0 & 0 & -1 & 0\\
+    1 & 1 & 0 & 0 & 0 & -1\\
+    1 & 0 & 1 & -1 & 0 & 0\\
+    1 & 0 & -1 & 1 & 0 & 0\\
+    1 & 0 & 0 & 0 & 1 & 0\\
+    1 & -1 & 0 & 0 & 0 & 1
+  \end{bmatrix}
+  \therefore rref(X) =
+  \begin{bmatrix}
+    1 & 0 & 0 & 0 & 0 & 0\\
+    0 & 1 & 0 & 0 & 0 & 0\\
+    0 & 0 & 1 & 0 & 0 & 0\\
+    0 & 0 & 0 & 1 & 0 & 0\\
+    0 & 0 & 0 & 0 & 1 & 0\\
+    0 & 0 & 0 & 0 & 0 & 1\\
+    0 & 0 & 0 & 0 & 0 & 0\\
+    0 & 0 & 0 & 0 & 0 & 0\\
+    0 & 0 & 0 & 0 & 0 & 0\\
+    0 & 0 & 0 & 0 & 0 & 0\\
+    0 & 0 & 0 & 0 & 0 & 0\\
+    0 & 0 & 0 & 0 & 0 & 0
+  \end{bmatrix}
+$$
+  
+  Based on the $rref(X)$, there is a pivot in every columns. Hence, the columns 
+of the new X is linear independence.
+ 
+### d)
+  We will look at cases where Team 1 plays against Team 2. The following is the
+difference in scores between 2 teams. The first one is when Team 1 is the home team,
+while the second one is when Team 2 is the home team:
+$$
+  \begin{aligned}
+    y_{12k}&=\mu+\alpha_1-\alpha_2+e_{12k}\\
+    \therefore 
+    E[y_{12k}]&=E[\mu+\alpha_1-\alpha_2+e_{12k}]\\
+              &=E[\mu]+E[\alpha_1]-E[\alpha_2]+E[e_{12k}]\\
+              &=\mu+E[\alpha_1]-E[\alpha_2]\\
+    \newline
+    y_{21k}&=\mu+\alpha_2-\alpha_1+e_{21k}\\
+    \therefore
+    E[y_{21k}]&=E[\mu+\alpha_2-\alpha_1+e_{21k}]\\
+              &=E[\mu]+E[\alpha_2]-E[\alpha_1]+E[e_{21k}]\\
+              &=\mu+E[\alpha_2]-E[\alpha_1]\\
+  \end{aligned}
+$$
+  In both cases, we can see that the strength of the teams does not change regardless
+whether they are home or away team. And in both case, the parameter $\mu$ "assists"
+the strength of the home team. As a result, the parameter $\mu$ can be considered
+to be the `home ground advantage`.
+
+### e)
+  - $\alpha_2,\alpha_3,\alpha_4,\alpha_5,\alpha_6$ are respectively the strength 
+of team B,C,D,E,F with relative to team A ($\alpha_1$).
+
+  - In context, the null hypothesis states that there is no difference in the 
+strength of team B, C, D, E, F and the strength of team A.
+ 
+### f)
+  With the constraint $\alpha_1=0$, we can remove the columns for the parameter 
+$\alpha_1$. We have:
+$$
+  X_1=
+  \begin{bmatrix}
+    1 & 0 & 0 & 0 & 0 & 0\\
+    1 & 1 & 0 & 0 & 0 & 0\\
+    1 & 0 & 1 & 0 & 0 & 0\\
+    1 & 0 & 0 & 1 & 0 & 0\\
+    1 & 0 & 0 & 0 & 1 & 0\\
+    1 & 0 & 0 & 0 & 0 & 1\\
+    1 & 0 & 0 & 0 & 0 & 0\\
+    1 & 1 & 0 & 0 & 0 & 0\\
+    1 & 0 & 1 & 0 & 0 & 0\\
+    1 & 0 & 0 & 1 & 0 & 0\\
+    1 & 0 & 0 & 0 & 1 & 0\\
+    1 & 0 & 0 & 0 & 0 & 1
+  \end{bmatrix}
+  X_2=
+  \begin{bmatrix}
+    1 & 0 & 0 & 1 & 0 & 0\\
+    1 & 0 & 0 & 0 & 1 & 0\\
+    1 & 0 & 0 & 0 & 0 & 1\\
+    1 & 1 & 0 & 0 & 0 & 0\\
+    1 & 0 & 1 & 0 & 0 & 0\\
+    1 & 0 & 0 & 0 & 0 & 0\\
+    1 & 0 & 0 & 0 & 1 & 0\\
+    1 & 0 & 0 & 0 & 0 & 1\\
+    1 & 0 & 0 & 1 & 0 & 0\\
+    1 & 0 & 1 & 0 & 0 & 0\\
+    1 & 0 & 0 & 0 & 0 & 0\\
+    1 & 1 & 0 & 0 & 0 & 0
+  \end{bmatrix}
+  \therefore X_1-X_2=
+  \begin{bmatrix}
+    0 & 0 & 0 & -1 & 0 & 0\\
+    0 & 1 & 0 & 0 & -1 & 0\\
+    0 & 0 & 1 & 0 & 0 & -1\\
+    0 & -1 & 0 & 1 & 0 & 0\\
+    0 & 0 & -1 & 0 & 1 & 0\\
+    0 & 0 & 0 & 0 & 0 & 1\\
+    0 & 0 & 0 & 0 & -1 & 0\\
+    0 & 1 & 0 & 0 & 0 & -1\\
+    0 & 0 & 1 & -1 & 0 & 0\\
+    0 & 0 & -1 & 1 & 0 & 0\\
+    0 & 0 & 0 & 0 & 1 & 0\\
+    0 & -1 & 0 & 0 & 0 & 1
+  \end{bmatrix}
+$$
+
+  The only difference between $X$ and $X_1-X_2$ is the first column, or the
+intercept column. While in $X$, the first column is full of value 1, the first 
+column in $X_1-X_2$ is full of value 0.
+ 
+## Q2
+  Load the packages
+```{r}
+pacman::p_load(tidyverse)
+```
+
+### a)
+  - Read data in.
+```{r}
+df <- read.csv("AFL2019.csv")
+```
+
+  - Record Home.Team and Away.Team as factors
+```{r}
+df <- df %>% 
+  mutate(
+    Home.Team=as.factor(Home.Team),
+    Away.Team=as.factor(Away.Team)
+  )
+```
+
+  - List of AFL teams in 2019
+```{r}
+AFL_teams_2019 <- unique(df$Home.Team)
+AFL_teams_2019
+```
+  
+  - The reference level will be the first level of the factor in alphabetical order. 
+In this case, there are 18 levels and team Adelaide Crows will be used as reference 
+level if the standard factor coding is used.
+
+### b)
+  - Add new column `difference`.
+```{r}
+new_df <- df %>% 
+  mutate(difference = Home.Score - Away.Score)
+head(new_df)
+```
+
+### c)
+  The model matrix X will be constructed based on question 1f. First 2 matrices 
+X1 and X2 will be constructed. Then X will be (X1-X2) exclude the intercept.
+```{r}
+X1 <- model.matrix(difference ~ Home.Team, data=new_df)
+X2 <- model.matrix(difference ~ Away.Team, data=new_df)
+X <- (X1-X2)[,-1]
+```
+
+### d)
+  - Fit the model M
+```{r}
+y <- new_df$difference
+M <- lm(y ~ X)
+```
+
+  - Plot the residuals vs fitted values plot
+```{r}
+par(mar = c(9, 5, 2, 3)) 
+plot(M, which=1) 
+mtext("This plot shows the relationship between the strength of home and away 
+      teams and the difference in score. The red line represents the mean score 
+      difference value.", side = 1, line = 8)
+```
+
+  - Plot the normal quantile plot
+```{r}
+par(mar = c(9, 5, 2, 3)) 
+plot(M, which=2)
+mtext("This plot shows a normal quantile plot of 198 random samples from a 
+      standard normal distribution. The red line represents the expected 
+      quantiles if the data were normally distributed.", side = 1, line = 8)
+```
+
+**Regression assumptions**
+
+ **Linearity**: 
+  The residuals are roughly randomly scattered about the zero line in the residuals
+versus fitted values plot, apart from slight curvature near the endpoints. Hence,
+the linearity assumption is close to reasonable.
+
+ **Homoscedasticity**:
+  The spread about the zero line appears roughly constant in the residuals versus
+fitted values plot. Hence, the assumption of constant variance is reasonable.
+
+ **Normality**:
+  There is some departure from normality in both tails of the distribution of 
+residuals. However, the majority of the data is close to normally distributed.
+Hence, normality assumption is reasonable.
+
+ **Independence**: 
+  The plots can not verify this assumption.
+ 
+### e) 
+  The estimated home team effect is `3.682`. Since the p-value is `0.1174` (> 0.05),
+the effect is not statistically significant. The estimated home team effect is the
+intercept in the model. We can look at the model summary.
+```{r}
+summary(M)
+broom::tidy(M)
+```
+
+ 
+### f)
+  We can look for these values in the model summary. The F-statistic is `4.424`, 
+with`17` numerator degrees of freedom and `180` denominator degrees of freedom. 
+The p-value is `1.337e-07`. Since the p-value < 0.05, there is sufficient evident 
+to reject the null hypothesis. In context, there is at least one team with a 
+different strength from team Adelaide Crows.
+```{r}
+summary(M)
+broom::glance(M)
+```
+
+### g)
+  - The estimated home team effect is `3.682`, the estimated strength of the Brisbane
+Lions is `12.892` while the estimated strength of the Carlton is `-14.758`. We can
+predict the expected difference in score by substituting the values into the model M.
+```{r}
+y0 <- 3.682 + 12.892 - (-14.758)
+y0
+```
+  - If the Brisbane Lions play at home against Carlton, the Lions will win by
+  roughly 32 points
+ 
+
+  
+ 

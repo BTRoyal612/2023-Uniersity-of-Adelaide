@@ -1,0 +1,79 @@
+---
+title: "SMW4_Bao"
+author: "Gia Bao hoang"
+date: "2023-03-27"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(
+  obsecho = TRUE, 
+  fig.width = 6, 
+  fig.asp = 0.618, 
+  out.width = "70%",
+  fig.align = "center", 
+  root.dir = '../'
+)
+pacman::p_load(tidyverse, tidymodels, janitor, ggplot2, gglm)
+```
+
+- Load the data
+```{r}
+X <- seq(0,3,by=0.01) #predictor
+bnd <-mean(X)/2 #boundary between linear and nonlinear response
+a <- 3 #arbitrary
+b <- -2*bnd*a #match first derivatives at X=7
+c <- -bnd^2*a-bnd*b #match value at X=7
+Y <- X + (X>bnd) * sin( a*X^2 + b*X + c) #combines linear and nonlinear response
+s = 0.1
+Y <- Y + rnorm(length(X),sd=s)#add noise
+df <- tibble(X=X, Y=Y)
+
+df %>% ggplot(aes(X,Y)) + geom_point()
+```
+
+- Fit a GAM to predict Y
+```{r}
+gam1 <- mgcv::gam(Y ~ s(X), data = df, method = "REML")
+plot(gam1,residuals=TRUE)
+```
+- Try out parameter bs in s()
+```{r}
+gam1.1 <- mgcv::gam(Y ~ s(X, bs='cr'), data = df, method = "REML")
+gam1.2 <- mgcv::gam(Y ~ s(X, bs='tp'), data = df, method = "REML")
+```
+
+- Plot the change with bs
+```{r}
+plot(gam1.1,residuals=TRUE)
+plot(gam1.2,residuals=TRUE)
+```
+
+- Try out the parameter method in gam()
+```{r}
+gam2.1 <- mgcv::gam(Y ~ s(X), data = df, method = "P-REML")
+gam2.2 <- mgcv::gam(Y ~ s(X), data = df, method = "GCV.Cp")
+```
+
+- Plot the change with method
+```{r}
+plot(gam2.1,residuals=TRUE)
+plot(gam2.2,residuals=TRUE)
+```
+
+- Try out the parameter sp in gam
+```{r}
+gam3 <- mgcv::gam(Y ~ s(X), data = df, method = "REML", sp=1e-5)
+plot(gam3,residuals=TRUE)
+```
+
+
+```{r}
+gam4 <- mgcv::gam(Y ~ s(X, k=40), data = df, method = "REML")
+plot(gam4,residuals=TRUE)
+```
+
+```{r}
+mgcv::gam.check(gam4)
+```
+

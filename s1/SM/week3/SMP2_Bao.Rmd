@@ -1,0 +1,105 @@
+---
+title: "Practical2"
+author: "Gia Bao hoang"
+date: "2023-03-21"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(
+  obsecho = TRUE, 
+  fig.width = 6, 
+  fig.asp = 0.618, 
+  out.width = "70%",
+  fig.align = "center", 
+  root.dir = '../'
+)
+pacman::p_load(tidyverse, tidymodels, janitor, ggplot2, broom)
+```
+
+# Steps
+
+- Read in the data
+```{r}
+loan <- readxl::read_excel("loan.xlsx")
+loan
+```
+- Fit the model
+```{r}
+loan_lm1 <- lm(loan_amnt ~ home_ownership, data = loan)
+```
+
+- What is the reference category for home_ownership?
+```{r}
+loan %>% count(home_ownership)
+model.matrix(loan_lm1)[1:5, ]
+```
+The reference category is MORTAGE
+
+- Calculate the group means for each level of home_ownership. Show how these can be obtained from the lm() output.
+```{r}
+grp_means <-
+loan %>%
+group_by(home_ownership) %>%
+summarise(mean(loan_amnt), .groups = "keep")
+grp_means
+```
+```{r}
+loan_lm1 %>% tidy()
+```
+The group mean for MORTAGE is the intercept. The group mean for OWN is the intercept minus 8085. The group for RENT is the intercept minus 2905.
+
+- Redo the linear modelling using the zero sum constraint.
+```{r}
+loan_lm2 <- lm(loan_amnt ~ home_ownership,
+data=loan,
+contrasts = list(home_ownership = "contr.sum")
+)
+model.matrix(loan_lm2)[1:5,]
+```
+- Calculate the overall mean loan_amnt. How can you get this, and the group means from the new lm() output?
+```{r}
+mean(loan$loan_amnt)
+```
+```{r}
+loan_lm2 %>% tidy()
+```
+So the intercept is the overall mean. The group mean for MORTGAGE is the intercept plus 3663.333. The group mean for OWN is the intercept minus 4421.667, and finally the group mean of RENT is the intercept minus 3663.333 and plus 4421.667
+
+- Fit the models
+```{r}
+loan_lm3 <- lm(loan_amnt ~ home_ownership + annual_inc,data=loan)
+loan_lm4 <- lm(loan_amnt ~ home_ownership * annual_inc,data=loan)
+loan_lm4 <- lm(loan_amnt ~ home_ownership + annual_inc + home_ownership:annual_inc,data=loan)
+```
+
+- For each model, give the estimated regression line for each of the three groups
+```{r}
+loan_lm3 %>% tidy()
+```
+
+**MORTAGE**: loan_amnt = 9698.62 + 0.1021 annual_inc
+**OWN**: loan_amnt = (9698.62 - 5734.09) + 0.1021 annual_inc
+**RENT**: loan_amnt = (9698.62 - 2342.52) + 0.1021 annual_inc
+
+```{r}
+loan_lm4 %>% tidy()
+```
+
+**MORTAGE**: loan_amnt = 11514.42 + 0.0773 annual_inc
+**OWN**: loan_amnt = (11514.42 - 7875.047) + (0.0773 + 0.0312) annual_inc
+**RENT**: loan_amnt = (11514.42 -5779.526) + (0.0773 + 0.0487) annual_inc
+
+# Plots
+```{r}
+loan %>%
+  ggplot(aes(annual_inc, loan_amnt, col = home_ownership)) +
+  geom_point() +
+  geom_smooth(method = lm, se = FALSE, aes(group = 1))
+## ‘geom_smooth()‘ using formula ’y ~ x’
+```
+
+
+
+
+

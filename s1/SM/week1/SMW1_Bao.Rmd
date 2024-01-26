@@ -1,0 +1,107 @@
+---
+title: "Workshop1"
+author: "Gia Bao hoang"
+date: week 1
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(
+  echo = TRUE, 
+  fig.width = 6, 
+  fig.asp = 0.618, 
+  out.width = "70%",
+  fig.align = "center", 
+  root.dir = "../"
+)
+```
+
+Load the packages
+```{r}
+pacman::p_load(tidyverse, janitor, gglm)
+```
+# Data
+
+Load the data
+```{r}
+clams <- read_delim("./ZuurData/Clams.txt")
+clams
+```
+
+Clean names
+```{r}
+clams <- clean_names(clams)
+clams <- transmute(clams,
+                   month = as_factor(month), 
+                   length,
+                   weight = afd,
+                   log_length = lnlength,
+                   log_weight = lnafd
+                    )
+clams
+```
+
+# EDA
+
+Look at the relationship of weight with month
+```{r}
+ggplot(clams,
+       aes(month, weight)
+       ) + 
+  geom_boxplot()
+
+```
+
+Look at the relationship of weight with length
+```{r}
+ggplot(clams,
+       aes(length, weight)
+       ) + 
+  geom_point()
+
+```
+
+Look at both relationships
+```{r}
+ggplot(clams,
+       aes(length, weight)
+       ) + 
+  geom_point() +
+  facet_wrap(~month)
+```
+
+Plot the log transform variable
+```{r}
+ggplot(clams,
+       aes(log_length, log_weight)
+       ) + 
+  geom_point()
+```
+Plot the log transform against month
+```{r}
+ggplot(clams,
+       aes(log_length, log_weight)
+       ) + 
+  geom_point() +
+  facet_wrap(~month)
+```
+
+# Model
+
+Interaction term between the log_length and month
+```{r}
+model_interact <- lm(log_weight ~ log_length * month, data = clams)
+summary(model_interact)
+
+```
+Compare to other models
+```{r}
+drop1(model_interact, test = "F")
+drop1(model_interact, test = "F", scope = "month")
+```
+# Model Verification
+```{r}
+gglm(model_interact)
+```
+
+Some non-normality and it is not homocedasticity. So the assumption is not statisfied

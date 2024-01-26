@@ -1,0 +1,161 @@
+---
+title: "Practical1"
+author: "Gia Bao hoang"
+date: "2023-03-02"
+output: html_document
+---
+
+# Set up 
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(
+  echo = TRUE, 
+  fig.width = 6, 
+  fig.asp = 0.618, 
+  out.width = "70%",
+  fig.align = "center", 
+  root.dir = "../"
+)
+pacman::p_load(tidyverse, gglm)
+```
+
+Load the data set
+```{r}
+data(Rubber, package = "MASS")
+Rubber
+```
+
+# Plot
+
+Plot hard against loss
+```{r}
+ggplot(Rubber,
+       aes(hard, loss)
+       ) + 
+  geom_point()
+```
+
+Plot tens against loss
+```{r}
+ggplot(Rubber,
+       aes(tens, loss)
+       ) + 
+  geom_point()
+```
+
+SIde by side comparision with trendline
+```{r}
+Rubber %>% 
+  pivot_longer(-loss) %>%
+  ggplot(aes(value, loss)) +
+  geom_point() +
+  facet_wrap(~name, scales = "free") + 
+  geom_smooth(method = lm)
+
+```
+
+# Model
+
+Fit the multiple linear regression
+$$
+  {E}(\texttt{loss}_i)=\beta_0+\beta_1\times\texttt{hard}_i+\beta_2\times\texttt{tens}_i
+$$
+
+```{r}
+rubber_lm <- lm(loss ~ hard + tens, data = Rubber)
+summary(rubber_lm)
+```
+
+Interpret the output:
+- The least square estimate of $\beta_1$ is $\hat\beta_1=-6.5708$. The interpretation of this estimate is that an increase of 1 unit of hardness, with tensile strength kept constant, would reduce the rate of abrasion by 6.5708 grams per hour.
+- The least square estimate of $\beta_2$ is $\hat\beta_2=-1.3743$. The interpretation of this estimate is that an increase of 1 unit of tensil strength, with hardness kept constant, would reduce the rate of abrasion by 1.3742 grams per hour
+
+# Verify model
+
+Verify the assumption of linear regression
+```{r}
+gglm(rubber_lm)
+```
+**Linearity**
+ - Random scatter with a slight curvature near the end points -> satisfied
+ 
+**Homocedasticity**
+ - The spread about the zero line is roughly constant -> satisfied
+ 
+**Normality**
+ - There are departure from normality in the lower tail. However, the rest of 
+ the data is closed to normally distributed -> satisfied
+
+# Prediction
+ 
+Predict loss for the following points 
+```{r}
+n_pts <- tibble(
+  hard = c(50, 65),
+  tens = c(200, 190)
+)
+n_pts
+```
+ 
+```{r}
+predict(rubber_lm)
+predict(rubber_lm, newdata = n_pts)
+```
+ Calculate 95% CI and PI for the new points
+ 
+```{r}
+predict(rubber_lm, newdata = n_pts, interval = "confidence")
+predict(rubber_lm, newdata = n_pts, interval = "prediction")
+```
+# Matrix
+
+The design matrix of the model
+```{r}
+x <- model.matrix(rubber_lm)
+x
+```
+
+Assign the response variable `loss` to a variable Y
+```{r}
+Y <- Rubber$loss
+Y
+```
+
+Calculate $\hat\beta=(X^TX)^{-1}X^TY$
+```{r}
+beta_hat <- solve(t(x) %*% x) %*% t(x) %*% Y
+beta_hat
+
+```
+
+Calculate $\hat{\boldsymbol{\eta}}=X\hat{\boldsymbol{\beta}}$
+
+```{r}
+eta <- x %*% beta_hat
+eta
+```
+
+Calculate the residual variance, $s^2_e$ directly from the observed and fitted values
+ 
+```{r}
+n <- nrow(Rubber)
+se <- sqrt(sum((Y - eta)^2) / (n - 3))
+se
+```
+
+Calculate the estimated variance matrix for $\hat{\boldsymbol{\beta}}$ using
+$$
+  (X^TX)^{-1} \times s^2_e
+$$
+Compare this to the result of the built-in calculation vcov()
+```{r}
+vcov(rubber_lm)
+res <- solve(t(x) %*% x) * se^2
+res
+```
+ 
+ 
+ 
+ 
+ 
+ 

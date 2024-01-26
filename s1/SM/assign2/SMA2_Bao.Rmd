@@ -1,0 +1,315 @@
+---
+title: |
+  | Statistical Modelling III
+  | Assignment 2
+author: "Gia Bao Hoang - a1814824"
+date: Semester 1 2023
+header-includes:
+  - \usepackage{fontspec}
+output: 
+  pdf_document:
+    latex_engine: xelatex
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(
+  echo = TRUE, 
+  fig.width = 6, 
+  fig.asp = 0.618, 
+  out.width = "70%",
+  fig.align = "center", 
+  root.dir = "../"
+)
+```
+
+# Q1
+  For $y > 0$, we have:
+$$
+  \lim_{\lambda \to 0} \frac{y^{\lambda}-1}{\lambda} = \frac{y^0 - 1}{0} = \frac{1-1}{0} = \frac{0}{0}
+$$
+
+  Since we have the limit of the form 0/0, we can apply the L'Hospital's rule by taking the derivative of the both the numerator and the denominator with respect to $\lambda$:
+$$
+  \begin{aligned}
+    \lim_{\lambda \to 0} \frac{y^{\lambda}-1}{\lambda}
+      &=\lim_{\lambda \to 0} \frac{\frac{d}{d\lambda} \left(y^\lambda - 1 \right)}{\frac{d}{d\lambda} \lambda}\\
+      &=\lim_{\lambda \to 0} \frac{y^{\lambda}\ln(y)}{1}\\
+      &=\frac{y^0\ln(y)}{1}\\
+      &=\ln(y)\\
+      &=\log(y)\\
+  \newline
+  \therefore\lim_{\lambda \to 0} \frac{y^{\lambda}-1}{\lambda}&=\log(y)
+  \end{aligned}
+$$
+
+# Q2
+ Load the package
+```{r}
+pacman::p_load(tidyverse, gglm, skimr, MASS)
+```
+
+## (a)
+```{r}
+data <- read_delim(("companies.txt"), delim = "\t")
+data
+```
+ 
+ Convert Employees to numeric
+```{r}
+data <- data %>% 
+  mutate(Employees = as.numeric(Employees))
+```
+
+## (b)
+ EDA
+```{r}
+skim(data)
+```
+
+ Histogram of the response variable
+```{r}
+data %>% 
+  ggplot(aes(MarketValue)) + 
+  geom_histogram(col = "black", fill = "orange") +
+  labs(
+    title = "Histogram of the MarketValue",
+    caption = "The value is concentrated near 0, with 
+    some outliners go beyond 25000"
+  )
+```
+
+ Based on the histogram, the MarketValue is concentrated near 0, with some 
+ outliners go beyond 25000. 
+
+## (c)
+  Scatterplots of MarketValue against each of the other predictors:
+```{r}
+data %>% 
+  ggplot(aes(Assets, MarketValue)) + 
+  geom_point() +
+  geom_smooth(method=lm) +
+  labs(
+    title = "Scatterplot of MarketValue vs Assets",
+    caption = "There is a cluster for Assets under 10000 millions
+    with some spread, indicating weak linearity."
+  )
+```
+
+```{r}
+data %>% 
+  ggplot(aes(Sales, MarketValue)) + 
+  geom_point() +
+  geom_smooth(method=lm) +
+  labs(
+    title = "Scatterplot of MarketValue vs Sales",
+    caption = "There is a cluster for Sales under 10000 millions
+    with some spread, indicating weak linearity."
+  )
+```
+
+```{r}
+data %>% 
+  ggplot(aes(Profits, MarketValue)) + 
+  geom_point() +
+  geom_smooth(method=lm) +
+  labs(
+    title = "Scatterplot of MarketValue vs Profits",
+    caption = "There is a cluster near 0 Profits, with some negative
+    values and low spread, indicating some linearity."
+  )
+```
+
+```{r}
+data %>% 
+  ggplot(aes(CashFlow, MarketValue)) + 
+  geom_point() +
+  geom_smooth(method=lm) +
+  labs(
+    title = "Scatterplot of MarketValue vs CashFlow",
+    caption = "There is a cluster near 0 CashFlow, with some negative 
+    values and low spread, indicating some linearity."
+  )
+```
+
+```{r}
+data %>% 
+  ggplot(aes(Employees, MarketValue)) + 
+  geom_point() +
+  geom_smooth(method=lm) +
+  labs(
+    title = "Scatterplot of MarketValue vs Employees",
+    caption = "There is a cluster for Employees under 100 thousands, 
+    with some curvature, indicating weak linearity."
+  )
+```
+
+## (d)
+ Scatterplots of MarketValue against each of other predictors on a log scale
+```{r}
+data %>% 
+  ggplot(aes(log(Assets), log(MarketValue))) + 
+  geom_point() +
+  geom_smooth(method=lm) +
+  labs(
+    title = "Scatterplot of log(MarketValue) vs log(Assets)",
+    caption = "The log scale declusters and improves the linearity between
+    predictor and response, with some outliners"
+  )
+``` 
+
+```{r}
+data %>% 
+  ggplot(aes(log(Sales), log(MarketValue))) + 
+  geom_point() +
+  geom_smooth(method=lm) +
+  labs(
+    title = "Scatterplot of log(MarketValue) vs log(Sales)",
+    caption = "The log scale declusters and improves the linearity between 
+    predictor and response, with some outliners"
+  )
+```
+
+```{r}
+data %>% 
+  ggplot(aes(log(Profits), log(MarketValue))) + 
+  geom_point() +
+  geom_smooth(method=lm) +
+  labs(
+    title = "Scatterplot of log(MarketValue) vs log(Profit)",
+    caption = "There are NaNs produced due to some negative values in Profits."
+  )
+```
+
+```{r}
+data %>% 
+  ggplot(aes(log(CashFlow), log(MarketValue))) + 
+  geom_point() +
+  geom_smooth(method=lm) +
+  labs(
+    title = "Scatterplot of log(MarketValue) vs log(CashFlow)",
+    caption = "There are NaNs produced due to some negative values in CashFlow."
+  )
+```
+
+```{r}
+data %>% 
+  ggplot(aes(log(Employees), log(MarketValue))) + 
+  geom_point() +
+  geom_smooth(method=lm) +
+  labs(
+    title = "Scatterplot of log(MarketValue) vs log(Employees)",
+    caption = "The log scale declusters and improves the linearity between
+    predictor and response, with some outliners"
+  )
+```
+## (e)
+ Fit the model
+```{r}
+M1 <- lm(MarketValue ~ log(Assets) + log(Sales) + Profits + CashFlow 
+         + log(Employees), data=data)
+summary(M1)
+```
+
+## (f)
+We apply log transformation to variables like Assets, Sales, and Employees to decluster and improve the linearity between them and the response variable, MarketValue. Scatterplots on a log scale demonstrate this enhanced linearity. However, attempting to log-transform Profits and CashFlow would generate warnings about NaN values due to the presence of negative values. Thus, it is not appropriate to apply logarithm transformations to these predictors in the model.
+ 
+## (e)
+ Check the assumptions of the model M1
+```{r}
+gglm(M1)
+```
+
+**Regression assumptions**
+
+ **Linearity**: 
+  The residuals are clustered around the (0,0) point with some outliners, 
+  especially there is one beyond the 75000 range. Hence, the linearity assumption 
+  is violated.
+
+ **Homoscedasticity**:
+  There is a cluster at the 0 value with some outlines, especially there is one 
+  beyond the 75000 range. There is no constant spread about the zero line in the 
+  scale-location plot. Hence, the assumption of constant variance is violated.
+
+ **Normality**:
+  There is some departure from normality in both tails of the distribution of 
+  residuals. However, the majority of the data is close to normally distributed.
+  Hence, normality assumption is reasonable.
+
+ **Independence**: 
+  The plots can not verify this assumption.
+
+## (h)
+ Use Box-Cox method
+```{r}
+bc <- boxcox(M1)
+```
+
+ We will choose the $\lambda$ value that maximizes the likelihood function 
+ within the 95% confidence interval.
+```{r}
+lambda <- bc$x[which.max(bc$y)]
+lambda
+```
+
+## (i)
+ Refit the model with the transformed response variable
+```{r}
+M2 <- lm(((MarketValue^lambda - 1)/lambda) ~ log(Assets) + log(Sales) + Profits 
+         + CashFlow + log(Employees), data=data)
+summary(M2)
+```
+
+## (j)
+ Check the assumption of the model M2
+```{r}
+gglm(M2)
+```
+
+**Regression assumptions**
+
+ **Linearity**: 
+  The residuals are roughly randomly scattered about the zero line with the 
+  exception of some outliners in the residual versus fitted values plot. Hence, 
+  the linearity assumption is close to reasonable.
+
+ **Homoscedasticity**:
+  The spread about the zero line appears roughly constant with the exception of 
+  some outliners in the scale-location plot. Hence, the assumption of constant
+  variance is close to reasonable.
+
+ **Normality**:
+  There is some departure from normality in both tails of the distribution of
+  residuals. However, the majority of the data is close to normally distributed.
+  Hence, normality assumption is reasonable.
+
+ **Independence**: 
+  The plots can not verify this assumption.
+  
+## (k)
+ I would prefer model M2 over M1, since the regression assumptions (Linearity, 
+ Homoscedasticity and Normality) of M2 is more reasonable then M1.
+ 
+## (l)
+ Create a tibble with the data for the new company
+```{r}
+new_company <- tibble(
+  Assets = 1065,
+  Sales = 642,
+  Profits = 30,
+  CashFlow = 59, 
+  Employees = 3.5
+)
+```
+
+ Obtain the 95% prediction interval for transformed MarketValue of the new 
+ company, using the M2 model. Then find the 95% prediction interval for the 
+ original MarketValue of the new company
+```{r}
+transform_pred <- predict(M2, newdata=new_company, interval="prediction", level=0.95)
+market_pred <- exp(log(transform_pred*lambda + 1)/lambda)
+market_pred
+```
+
+  The 95% prediction interval for the MarketValue of the new company: 
+  (67.42, 1978.41) in millions

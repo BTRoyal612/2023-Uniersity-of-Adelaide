@@ -1,0 +1,162 @@
+---
+title: "Practical3"
+author: "Gia Bao hoang"
+date: "2023-04-27"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(
+  echo = TRUE, 
+  fig.width = 6, 
+  fig.asp = 0.618, 
+  out.width = "70%",
+  fig.align = "center", 
+  root.dir = "../"
+)
+```
+
+ Load the package
+```{r}
+pacman::p_load(tidyverse, gglm, broom, ggrepel)
+```
+
+ Read in the data
+```{r}
+hills <- read_csv("hills.csv")
+hills
+```
+ 
+ Obtain a scatter plot of dist vs climb. Identify the points that you believe 
+ will have high leverage.The package ggrepel is very cool for this.
+```{r}
+hills %>%
+  ggplot(aes(dist, climb)) +
+  geom_point() +
+  geom_text_repel(aes(label = race))
+```
+ 
+Calculate the leverage values from the design matrix for the model 
+{~ climb + dist using the matrixexpression given in lectures. Note the command 
+diag(H) will extract the diagonal values of a squarematrix H
+```{r}
+X <- model.matrix(~ climb + dist, data=hills)
+H <- X %*% solve(t(X) %*% X ) %*% t(X)
+hills <-
+hills %>%
+  add_column(
+  leverage = diag(H)
+  )
+hills
+```
+
+```{r}
+p <- ncol(X)
+n <- nrow(X)
+hills %>%
+  ggplot(aes(leverage, fct_reorder(race, leverage))) +
+  geom_col() +
+  theme(axis.text.x = element_text(angle = -90, hjust=0)) +
+  geom_vline(xintercept = 2 * p / n) +
+  labs(y = "race")
+```
+ 
+ Calculate the leverage values using the built-in hatvalues() function in R 
+ and check that they agreewith those calculated from the formula.
+ (Note: R also provides functions, cooks.distance(), rstudent() and rstandard() 
+ to calculate Cook’s distance, the studentized residuals and the standardized 
+ residuals, respectively.)
+```{r}
+hills_lm <- lm(time ~ climb + dist, data = hills)
+hills <-
+  hills %>%
+  add_column(
+  r_leverage = hatvalues(hills_lm)
+  )
+hills
+```
+ 
+ Obtain the usual sequence of diagnostic plots from R
+```{r}
+gglm(hills_lm)
+plot(hills_lm)
+```
+
+ Based on the residuals vs leverage plot, identify the most influential point
+```{r}
+hills %>% slice(7)
+```
+
+ Identify the points with the largest residual and the highest leverage, and comment.
+```{r}
+augment(hills_lm) %>%
+  add_column(
+    race = hills$race
+  ) %>%
+  filter(
+    .resid == max(.resid) | .hat == max(.hat) | .cooksd == max(.cooksd)
+  ) %>%
+  select(race, .resid, .hat, .cooksd)
+```
+ 
+ Fit the same model to the data with the most influential point removed\
+```{r}
+hills_lm2 <- lm(time ~ climb + dist,
+                data = hills %>% filter(race != "Bens of Jura"))
+gglm(hills_lm2)
+```
+
+ Calculate Cook’s distance according to the formula
+```{r}
+beta <- coef(hills_lm)
+beta_i <- coef(hills_lm2)
+X <- model.matrix(hills_lm)
+se2 <- glance(hills_lm)$sigma^2
+p <- ncol(X)
+t(beta - beta_i) %*% t(X) %*% X %*% (beta-beta_i) / (p*se2)
+```
+```{r}
+cooks.distance(hills_lm)
+```
+
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 

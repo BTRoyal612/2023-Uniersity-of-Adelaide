@@ -1,0 +1,191 @@
+---
+title: |
+  | Statistical Modelling III
+  | Assignment 3
+author: "Gia Bao Hoang - a1814824"
+date: Semester 1 2023
+header-includes:
+  - \usepackage{fontspec}
+  - \usepackage{setspace}
+output: 
+  pdf_document:
+    latex_engine: xelatex
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(
+  echo = TRUE, 
+  fig.width = 6, 
+  fig.asp = 0.618, 
+  out.width = "70%",
+  fig.align = "center", 
+  root.dir = "../"
+)
+```
+
+# Q1
+## (a)
+  We have:
+  
+  (i) Treatment A and controls ($x_i=0 , x_j=0$):
+$$
+\begin{aligned}
+  \log(\lambda_{11})  &= \gamma_0 + \gamma_1 x_i + \gamma_2 x_j + \gamma_3 x_i x_j \\
+                      &= \gamma_0 + \gamma_1 (0) + \gamma_2 (0) + \gamma_3 (0)(0) \\
+                      &= \gamma_0 \\
+\end{aligned}
+$$
+
+  (ii) Treatment A and cases ($x_i=0 , x_j=1$):
+$$    
+\begin{aligned}
+  \log(\lambda_{12})  &= \gamma_0 + \gamma_1 x_i + \gamma_2 x_j + \gamma_3 x_i x_j \\
+                      &= \gamma_0 + \gamma_1 (0) + \gamma_2 (1) + \gamma_3 (0)(1) \\
+                      &= \gamma_0 + \gamma_2 \\
+\end{aligned}
+$$
+  
+  (iii) Treatment B and controls ($x_i=1 , x_j=0$):
+$$   
+\begin{aligned}
+  \log(\lambda_{21})  &= \gamma_0 + \gamma_1 x_i + \gamma_2 x_j + \gamma_3 x_i x_j \\
+                      &= \gamma_0 + \gamma_1 (1) + \gamma_2 (0) + \gamma_3 (1)(0) \\
+                      &= \gamma_0 + \gamma_1 \\
+\end{aligned}
+$$
+  
+  (iv) Treatment B and cases ($x_i=1 , x_j=1$):
+$$      
+\begin{aligned}
+  \log(\lambda_{22})  &= \gamma_0 + \gamma_1 x_i + \gamma_2 x_j + \gamma_3 x_i x_j \\
+                      &= \gamma_0 + \gamma_1 (1) + \gamma_2 (1) + \gamma_3 (1)(1) \\
+                      &= \gamma_0 + \gamma_1 + \gamma_2 + \gamma_3 \\
+\end{aligned}
+$$
+
+## (b)
+  We have $Y_{i1} \sim Po(\lambda_{i1}), \; Y_{i2} \sim Po(\lambda_{i2})$ and 
+  they are independent:
+$$
+\begin{aligned}
+  P(Y_{i2}|Y_{i1}+Y_{i2}=n_i) &= \frac{P(Y_{i2}=y \;\cap Y_{i1}+Y_{i2}=n_i)}{P(Y_{i1}+Y_{i2}=n_i)} \\
+                              &= \frac{P(Y_{i2}=y \;\cap Y_{i1}=n_i-y)}{P(Y_{i1}+Y_{i2}=n_i)} \\
+                              &= \frac{
+                                      \frac{e^{-\lambda_{i2}} \lambda_{i2}^y}{y!} .
+                                      \frac{e^{-\lambda_{i1}} \lambda_{i1}^{n_i-y}}{(n_i-y)!}
+                                  }{
+                                      \frac{e^{-(\lambda_{i1}+\lambda_{i2})} (\lambda_{i1}+\lambda_{i2})^{n_i}}{n_i!}
+                                  } \\
+                              &= \frac{
+                                      \frac{\lambda_{i2}^y}{y!} .
+                                      \frac{\lambda_{i1}^{n_i-y}}{(n_i-y)!}
+                                  }{
+                                       \frac{(\lambda_{i1}+\lambda_{i2})^{n_i}}{n_i!}
+                                  } \\
+                              &= \frac{n_i!}{y!(n_i-y)!} .
+                                \frac{\lambda_{i2}^y \lambda_{i1}^{n_i-y}}  
+                                     {(\lambda_{i1}+\lambda_{i2})^{n_i}} \\
+  \newline                           
+  \frac{n_i!}{y!(n_i-y)!} &= 
+    \begin{pmatrix}
+      n_i \\
+      y
+    \end{pmatrix} \\
+  \newline
+  \frac{\lambda_{i2}^y \lambda_{i1}^{n_i-y}}  
+       {(\lambda_{i1}+\lambda_{i2})^{n_i}} &= \frac{\lambda_{i2}^y \lambda_{i1}^{n_i-y}}  
+                                                   {(\lambda_{i1}+\lambda_{i2})^{n_i}} .
+                                              \frac{(\lambda_{i1}+\lambda_{i2})^{-y}}
+                                                   {(\lambda_{i1}+\lambda_{i2})^{-y}} \\
+                                           &= \left(\frac{\lambda_{i1}}{\lambda_{i1}+\lambda_{i2}}\right)^{n_i-y} . 
+                                              \left(\frac{\lambda_{i2}}{\lambda_{i1}+\lambda_{i2}}\right)^y \\
+\end{aligned}
+$$  
+
+ Let $\pi_i = \frac{\lambda_{i2}}{\lambda_{i1}+\lambda_{i2}}$, then
+$1-\pi_i = \frac{\lambda_{i1}}{\lambda_{i1}+\lambda_{i2}}$ 
+  ($Y_{i1}$ and $Y_{i2}$ are from the same treatment)
+  
+  Therefore, we have:
+$$
+\begin{aligned}
+  P(Y_{i2}|Y_{i1}+Y_{i2}=n_i) &= 
+    \begin{pmatrix}
+      n_i \\
+      y
+    \end{pmatrix} 
+    \pi_i^y (1-\pi_i)^{(n_i-y)} \\
+  \newline
+  \therefore Y_{i2}|(Y_{i1}+Y_{i2}&=n_i) \sim Bin(n_i, \pi_i)
+\end{aligned}
+$$
+
+## (c)
+  For treatment A, $x_i = 0$:
+$$
+\begin{aligned}
+  log\left(\frac{\pi_1}{1-\pi_1}\right) &= \beta_0 + \beta_1 x_i \\
+                                        &= \beta_0 + \beta_1 (0) \\
+                                        &= \beta_0 \\
+\end{aligned}
+$$
+
+  For treatment B, $x_i = 1$:
+$$
+\begin{aligned}
+  log\left(\frac{\pi_2}{1-\pi_2}\right) &= \beta_0 + \beta_1 x_i \\
+                                        &= \beta_0 + \beta_1 (1) \\
+                                        &= \beta_0 + \beta_1 \\
+\end{aligned}
+$$
+
+  Subtracting the equation for treatment A from the equation for treatment B, 
+  we have:
+$$
+\begin{aligned}
+  log\left(\frac{\pi_2}{1-\pi_2}\right) - log\left(\frac{\pi_1}{1-\pi_1}\right) 
+    &= (\beta_0 + \beta_1) - \beta_0 \\
+    &= \beta_1 \\
+\end{aligned}
+$$
+
+ In addition, $\pi_i = \frac{\lambda_{i2}}{\lambda_{i1}+\lambda_{i2}}$ and
+$1-\pi_i = \frac{\lambda_{i1}}{\lambda_{i1}+\lambda_{i2}}$:
+$$
+\begin{aligned}
+  \beta_1 &= log\left(\frac{\pi_2}{1-\pi_2}\right) - log\left(\frac{\pi_1}{1-\pi_1}\right) \\
+          &= log\left(
+             \frac{
+                \frac{\lambda_{22}}{\lambda_{21}+\lambda_{22}}
+             }{
+                \frac{\lambda_{21}}{\lambda_{21}+\lambda_{22}}
+             }
+             \right) - log\left(
+             \frac{
+                \frac{\lambda_{12}}{\lambda_{i1}+\lambda_{12}}
+             }{
+                \frac{\lambda_{11}}{\lambda_{i1}+\lambda_{12}}
+             }
+             \right) \\
+          &= log\left(
+             \frac{\lambda_{22}}{\lambda_{21}}
+             \right) - log\left(
+             \frac{\lambda_{12}}{\lambda_{11}}
+             \right) \\
+          &= log(\lambda_{22}) - log(\lambda_{21}) - log(\lambda_{12}) + log(\lambda_{11}) \\
+          &= (\gamma_0 + \gamma_1 + \gamma_2 + \gamma_3) -
+             (\gamma_0 + \gamma_1) -
+             (\gamma_0 + \gamma_2) +
+             (\gamma_0) \\
+          &= \gamma_3 \\
+  \newline
+  \therefore \beta_i &= \gamma_3 \\
+\end{aligned}
+$$
+
+## (d) 
+  Testing that treatment has no effect on the probability of being a case is 
+  equivalent to testing if $\beta_1 = 0$ in the logistic regression model. From 
+  part (c), we know that $\beta_1 = \gamma_3$. Therefore, testing for 
+  $\beta_1 = 0$ is equivalent to testing for no interaction in the Poisson 
+  model ($\gamma_3 = 0$).

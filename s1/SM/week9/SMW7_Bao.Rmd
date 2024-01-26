@@ -1,0 +1,29 @@
+---
+title: "Workshop7"
+author: "Gia Bao hoang"
+date: "2023-05-08"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(
+  obsecho = TRUE, 
+  fig.width = 6, 
+  fig.asp = 0.618, 
+  out.width = "70%",
+  fig.align = "center", 
+  root.dir = '../'
+)
+pacman::p_load(tidyverse, tidymodels, janitor, ggplot2, nlme)
+```
+
+Load data
+```{r}
+mobile <- read.csv('aggMobility2_LGA.xlsx')
+mobile
+```
+```{r}
+booking <- read.csv('Aggregate_Bookings_2LGA.xlsx')
+booking
+```
+

@@ -1,0 +1,120 @@
+---
+title: "Workshop8"
+author: "Gia Bao hoang"
+date: "2023-05-15"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(
+  obsecho = TRUE, 
+  fig.width = 6, 
+  fig.asp = 0.618, 
+  out.width = "70%",
+  fig.align = "center", 
+  root.dir = '../'
+)
+pacman::p_load(tidyverse, tidymodels, janitor, ggplot2, nlme, skimr)
+```
+
+# Load the csv
+```{r}
+data <- read.delim("RIKZ.txt")
+data
+```
+
+# EDA
+```{r}
+data <- clean_names(data)
+skim(data)
+data <- data %>% 
+  mutate(
+    beach = as.factor(beach)
+  )
+data
+```
+
+# 3)
+```{r}
+m1 <- lme(richness ~ nap, data=data, random = ~ 1 | beach)
+summary(m1)
+anova(m1)
+```
+ Model prediction
+```{r}
+lme_int_pred <- predict(m1)
+
+df_int <- data %>% mutate(pred=lme_int_pred)
+
+lme_int_group_pred <- predict(m1, level=0)
+df_int <- df_int %>% mutate(group_pred=lme_int_group_pred)
+
+df_int %>% 
+  ggplot(aes(nap, pred, color=beach)) + geom_line() +
+  geom_point(aes(y=richness)) +
+  geom_line(aes(y=group_pred), color='black', size=1.5)
+```
+
+```{r}
+m2 <- lme(richness ~ nap, data=data, random = ~ 1 + nap | beach)
+summary(m2)
+anova(m2)
+```
+ 
+ Model 2 prediction
+```{r}
+lme_int_pred <- predict(m2)
+
+df_int <- data %>% mutate(pred=lme_int_pred)
+
+lme_int_group_pred <- predict(m2, level=0)
+df_int <- df_int %>% mutate(group_pred=lme_int_group_pred)
+
+df_int %>% 
+  ggplot(aes(nap, pred, color=beach)) + geom_line() +
+  geom_point(aes(y=richness)) +
+  geom_line(aes(y=group_pred), color='black', size=1.5)
+```
+
+```{r}
+m3 <- lme(richness ~ nap + exposure, data=data, random = ~ 1 | beach)
+summary(m3)
+anova(m3)
+```
+
+ Model 3 prediction
+```{r}
+lme_int_pred <- predict(m3)
+
+df_int <- data %>% mutate(pred=lme_int_pred)
+
+lme_int_group_pred <- predict(m3, level=0)
+df_int <- df_int %>% mutate(group_pred=lme_int_group_pred)
+
+df_int %>% 
+  ggplot(aes(nap, pred, color=beach)) + geom_line() +
+  geom_point(aes(y=richness)) +
+  geom_line(aes(y=group_pred), color='black', size=1.5)
+```
+
+
+```{r}
+m4 <- lme(richness ~ nap + exposure, data=data, random = ~ 1+ nap + exposure| beach)
+summary(m4)
+anova(m4)
+```
+
+ Model 3 prediction
+```{r}
+lme_int_pred <- predict(m4)
+
+df_int <- data %>% mutate(pred=lme_int_pred)
+
+lme_int_group_pred <- predict(m4, level=0)
+df_int <- df_int %>% mutate(group_pred=lme_int_group_pred)
+
+df_int %>% 
+  ggplot(aes(nap, pred, color=beach)) + geom_line() +
+  geom_point(aes(y=richness)) +
+  geom_line(aes(y=group_pred), color='black', size=1.5)
+```

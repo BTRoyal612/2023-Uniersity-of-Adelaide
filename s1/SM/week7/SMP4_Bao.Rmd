@@ -1,0 +1,154 @@
+---
+title: "Practical4"
+author: "Gia Bao hoang"
+date: "2023-04-28"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(
+  echo = TRUE, 
+  fig.width = 6, 
+  fig.asp = 0.618, 
+  out.width = "70%",
+  fig.align = "center", 
+  root.dir = "../"
+)
+```
+
+ Load the package
+```{r}
+pacman::p_load(tidyverse, gglm, broom, nlme)
+```
+
+ Read in data
+```{r}
+skin <- readxl::read_excel("skin.xlsx")
+skin
+```
+ 
+ Add column that is the proportion of cases for each row
+```{r}
+skin <- skin %>% 
+  mutate(
+    p = Cases / Population
+  )
+skin
+```
+ 
+ Plot proportion against age with colour of plots for each town. Describe the 
+ relationships, do the relationships make sense?
+```{r}
+skin %>%
+  ggplot(aes(Age, p, col = Town)) +
+  geom_point()
+```
+ 
+ Fit the following logistic regression models
+```{r}
+M0 <- glm(
+  cbind(Cases, Population - Cases) ~ 1,
+  data = skin,
+  family = binomial
+)
+M1 <- glm(
+  cbind(Cases, Population - Cases) ~ Town,
+  data = skin,
+  family = binomial
+)
+M2 <- glm(
+  cbind(Cases, Population - Cases) ~ Age,
+  data = skin,
+  family = binomial
+)
+M3 <- glm(
+  cbind(Cases, Population - Cases) ~ Town + Age,
+  data = skin,
+  family = binomial
+)
+```
+
+ Choose the best model
+```{r}
+anova(M0, M1, test='LRT')
+```
+
+```{r}
+anova(M0, M2, test='LRT')
+```
+
+```{r}
+anova(M0, M3, test='LRT')
+```
+
+```{r}
+AIC(M0, M1, M2, M3)
+```
+
+ With both LRT and AIC we see that the full model, M3 is the best
+
+ For you final model, give an interpretation of the coefficient TownSt Paul
+```{r}
+summary(M3)
+```
+
+ If you move from Dallas to St. Paul, we expect the log odds of skin cancer to 
+ decrease by 0.85492
+ 
+ Check the assumptions of the model
+```{r}
+skin <-
+  skin %>%
+  add_column(
+    res = residuals(M3, type = "pearson"),
+    fit = fitted(M3)
+  )
+skin
+```
+
+```{r}
+skin %>%
+  ggplot(aes(fit, res)) + geom_point()
+```
+
+```{r}
+skin %>%
+  ggplot(aes(Age, res)) + geom_boxplot()
+```
+ 
+```{r}
+skin %>%
+  ggplot(aes(Town, res)) + geom_boxplot()
+```
+ 
+ Still a slight sign of increase variance for larger values of fitted values. 
+ No patterns in residual versus fitted so the model seems good.
+ 
+ Use the model to predict the probability of skin cancer for a 51 year old 
+ living in Texas.
+```{r}
+new_pt <- tibble(Age = "45-54", Town = "Dallas - Fort Worth")
+logit_pred <- predict(M3, newdata = new_pt)
+logit_pred
+```
+ 
+```{r}
+pred <- exp(logit_pred) / (1 + exp(logit_pred))
+pred
+```
+```{r}
+predict(M3, newdata = new_pt, type = "response")
+```
+
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 

@@ -1,0 +1,295 @@
+---
+title: |
+  | STATS 3001 / STATS 4104 / STATS 7054
+  | Statistical Modelling III
+  | Workshop 3 - GAMs
+author: John Maclean
+date: Week 2
+output:
+  pdf_document: default
+  html_document:
+    theme: spacelab
+    df_print: paged
+always_allow_html: true
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(
+  obsecho = TRUE, 
+  fig.width = 6, 
+  fig.asp = 0.618, 
+  out.width = "70%",
+  fig.align = "center", 
+  root.dir = '../'
+)
+pacman::p_load(tidyverse, tidymodels, janitor, ggplot2)
+#apa theme
+apatheme=theme_bw()+
+  theme(panel.grid.major=element_blank(),
+        panel.grid.minor=element_blank(),
+        panel.border=element_blank(),
+        axis.line=element_line(),
+        text=element_text(family='Times'),
+        legend.title=element_blank(),
+        axis.text.y=element_text(size = 8),
+        axis.text.x=element_text(size = 8))
+theme_set(apatheme) #change as you like
+
+X <- seq(0,3,by=0.01) #predictor
+bnd <-mean(X) #boundary between linear and nonlinear response
+a <- 1 #arbitrary
+b <- -2*bnd*a #match first derivatives at X=7
+c <- -bnd^2*a-bnd*b #match value at X=7
+Y <- X + (X>bnd) * ( a*X^2 + b*X + c) #combines linear and nonlinear response
+s = 0.1
+Y <- Y + rnorm(length(X),sd=s)#add noise
+df <- tibble(X=X, Y=Y)
+```
+
+Load packages
+```{r}
+pacman::p_load(tidyverse, gglm, broom)
+```
+
+## Preface
+
+What makes a linear model linear? Suppose you model data $Y$. This is the standard linear model:
+
+\[Y = X\beta + \epsilon.\]
+
+(Assume that $\epsilon$ has mean 0 and variance $\sigma^2I$, &etc.) 
+
+1. Which of the following are linear models?
+
+\[\log(Y) = X\beta + \epsilon. \]
+\[Y = \log(X)\beta + \epsilon.\]
+\[Y = X {\log(\beta)} + \epsilon.\]
+\[Y^2 = e^X\beta + \epsilon.\]
+
+
+
+## Can you always transform data to get to linearity?
+
+Consider the following plot, showing a predictor vs a response variable,
+```{r}
+ p <- df %>% ggplot(aes(X,Y)) + geom_point()
+p
+```
+
+Let me expose the data so you can play with it:
+
+```{r}
+X <- seq(0,3,by=0.01) #predictor
+bnd <-mean(X) #boundary between linear and nonlinear response
+a <- 1 #arbitrary
+b <- -2*bnd*a #match first derivatives at X=7
+c <- -bnd^2*a-bnd*b #match value at X=7
+Y <- X + (X>bnd) * ( a*X^2 + b*X + c) #combines linear and nonlinear response
+s = 0.07
+Y <- Y + rnorm(length(X),sd=s)#add noise
+
+#make dataframe
+df <- tibble(X=X, Y=Y)
+```
+
+2. Work out what relationships are included in this data, and consider whether any data transformation you can think of is viable to obtain a linear response. 
+
+### Key question
+
+3. What if you employ different transformations on either side of this vertical line?
+
+```{r}
+df %>% ggplot(aes(X,Y)) + geom_point() + geom_vline(xintercept = bnd)
+```
+
+Call $x=`r bnd`$ a 'knot' and suppose we can employ different transformations on either side of the knot. Could you employ a linear model then? (Do not try to implement such a model.)
+
+
+Pause here to note two questions (that you cannot answer - yet). 
+
+* how do we identify knots to separate different data transforms? I specified above - need to automate. 
+* how do we identify good transformations of the data?
+
+
+## Notation
+
+An idea is to fit the model
+
+\[ Y_i = \alpha +  f(X_i) + \epsilon_i \;, \]
+
+where 
+\[ f(X_i) = \sum_{j=1}^p \beta_j b_j(X_i) \]
+
+is linear in the coefficients $\beta_j$ and builds an approximation of $Y_i$ using _basis functions_ $b_j$. We will refer to these functions as _smoothers_.
+
+Here's an example of cubic smoothers:
+
+```{r}
+x <- seq(0,1,by=0.001)
+b1 <- 1
+b2 <- x
+b3 <- x^2
+b4 <- x^3
+
+df_splines <- tibble(x,b1,b2,b3,b4)
+df_splines %>% pivot_longer(cols=b1:b4) %>% 
+  ggplot(aes(x,value,color=name)) + geom_line()
+```
+
+By weighting these functions and adding them, you can approximate a curve with a third order cubic polynomial. In practice we use smoother polynomials that are equivalent but less prone to extreme values, for example
+
+```{r, include=FALSE}
+x <- seq(0,1,by=0.001)
+b1 <- x
+b2 <- 1-x
+# r <- function(x,z){ ((z-.5)^2-1/12) * ((x-.5)^2-1/12)/4-( (abs(X-z)-.5)^4 - (abs(X-z)-.5)^2/2 + 7/240 )/24}
+b3 <- (1-x)^3 - (1-x)
+b4 <- (x-1)^3 - (x-1)
+
+df_splines <- tibble(x,b1,b2,b3,b4)
+df_splines %>% pivot_longer(cols=b1:b4) %>% 
+  ggplot(aes(x,value,color=name)) + geom_line()
+```
+
+
+
+
+
+# Try out GAM
+
+Recall. The idea is to separate your predictor space into regions bounded by _knots_, and then to seek a flexible data transformation (employing basis functions) called a _smoother_, that lets you flexibly model data. The result is a linear model because (refer the worksohp start) it is linear in the coefficients $\beta_j$. 
+
+The implementation of this idea is called a Generalised Additive Model or GAM. GAMs are flexible, allowing you to select many specific features of the above. GAMs also come with an automatic parameter selection process that attempts to find the 'best' smoother available. In the remainder of the workshop, I want you to:
+
+4. Begin. Load the mgcv package,
+```{r}
+pacman::p_load(mgcv)
+```
+and try the code 
+```{r}
+gam_model <- mgcv::gam(Y ~ s(X), data = df)
+summary(gam_model)
+plot(gam_model,residuals = TRUE, se = FALSE)
+```
+Note the `s(X)` tells GAM which predictors to smooth. Note 2 there are multiple `gam` functions that exist from various packages. I use `mgcv::gam` to specify which package/function uniquely. 
+
+5. Get the estimated coefficients from the model. (Try the `coef` function)
+
+```{r}
+coef(gam_model)
+```
+
+
+6. Tweak smoothness
+
+The smoother `s()` tries to fit data by interpolating between data points. The goal is to follow the broad trend of the data without getting 'too wiggly'. Try specifying the `sp` argument like `s(X, sp=...)`to affect how closely the smoother will match the data. Try sp = 10000 - should see something similar to linear regression - and sp = 0.1. 
+
+```{r}
+gam_model <- mgcv::gam(Y ~ s(X, sp = 1e4), data = df)
+plot(gam_model,residuals = TRUE, se = FALSE) #linear - no smoothing
+gam_model <- mgcv::gam(Y ~ s(X, sp = 1e-8), data = df)
+plot(gam_model,residuals = TRUE, se = FALSE) #suspiciously smooth - refer to second workshop to learn why k is involved
+```
+
+7. Load the isit data and try fitting a gam to station 6. Have a look at the default interpolation and try different values of `sp`. 
+
+```{r, message=FALSE}
+isit <- read_delim("workshops/ZuurData/Isit.txt") #read_delim will infer the delimitor
+```
+
+```{r}
+isit6 <- isit %>% filter(Station==6)
+
+gam6 <- mgcv::gam(Sources~s(SampleDepth, sp=1e-3), data = isit6)
+plot(gam6,residuals = TRUE, se = FALSE)
+```
+
+Comment: by default the smoother is quite wiggly at the right-hand-side of the plot. Suspect this is because the data violates several assumptions of a linear model (not just nonlinearity) and so manually select `sp` to be less thorough at matching the data. My version does not quite track the peak of `Sources`. 
+
+
+8. View smoother predictions
+
+Compare the output of these predict commands:
+
+```{r}
+gam6_out <- predict(gam6)
+gam6_out
+```
+This seems odd. Look at `isit6` to realise that SampleDepth is not in order. Let's 
+
+* add the prediction as a column to isit6
+* order isit6 by SampleDepth for future ease of interpretation
+
+```{r}
+isit6 <- isit6 %>% 
+  mutate(gam6_out = gam6_out)
+isit6 <- isit6 %>% arrange(SampleDepth) #quick google 'tidyverse sort tibble by column'
+isit6 %>% ggplot( #lets view SampleDepth vs Sources and vs gam6_out
+  aes(SampleDepth,Sources)) +
+    geom_point(color="blue") +
+    geom_point( aes(x=SampleDepth, y=gam6_out), color = "red")
+```
+Clear that `gam6_out` is - as it should be - mean predictions for the GAM at each input. Can use the `newdata` argument as usual. For safety, save over `gam6_out` with the newly ordered `isit6`. 
+
+```{r}
+gam6_out <- predict(gam6, newdata = isit6)
+```
+
+
+
+```{r}
+gam6_parts <- predict(gam6, newdata=isit6, type = "lpmatrix") #like model matrix
+#gam6_parts #is a big matrix
+```
+`gam6_parts` is precisely the value of each of the basis functions $b_j()$ at each of the points $(X_i)$. You see that `(Intercept)` is 1 everywhere - this is a model matrix.
+
+Try to reconstruct `gam6_out` from `gam6_parts`. Hint: you need something from earlier in the workshop. 
+
+```{r}
+gam6_out_manual <- gam6_parts %*% coef(gam6) #model matrix times estimated coefficients - as usual
+gam6_out_df <- tibble(builtin = gam6_out, manual = gam6_out_manual[,1], diff = builtin - manual) #note sneaky adjustment to deal with R's use of a matrix for gam6_out_manual. Since it's only got one column, gam6_out_manual[,1] strips out the matrix tpye and just prints the list of values. 
+gam6_out_df #look at built-in prediction vs manual
+```
+
+One use for `gam6_parts` is to visualise the fitted basis functions in the smoother, for example:
+
+```{r}
+gam6_fitted_values <- sweep(gam6_parts, #sweep does something to the input matrix...
+                            MARGIN=2, #here I specify to do something to each row of the matrix (by selecting second dimension)
+                            coef(gam6), `*` #here I say to multiply by the vector gam6
+                            )
+```
+
+You can plot one of the columns of `gam6_fitted_values` to see the fitted basis element (including its coefficient in the model). Or you can plot all of them at once:
+
+```{r, fig.cap = "Fitted basis elements for the GAM smoother"}
+gam6_fitted_values %>% as_tibble() %>% 
+  mutate(SampleDepth = isit6$SampleDepth) %>% 
+  pivot_longer(-SampleDepth) %>% 
+  ggplot(aes(SampleDepth,value,color=name)) +
+  geom_line() + 
+  ylab("Contribution to Sources")
+```
+
+
+
+
+9. Change number of basis functions
+
+Replace the `sp` optional argument to `s()` with `k`. Try k=3, k=10, k=20. Use your prior code to work out what is changing. 
+
+```{r}
+gam6 <- mgcv::gam(Sources~s(SampleDepth, sp=1e-3, k=20), data = isit6)
+coef(gam6)
+```
+Notice the number of basis functions has increased - because the number of coefficients has increased. 
+
+
+
+
+
+
+
+
+
+

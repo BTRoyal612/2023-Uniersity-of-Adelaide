@@ -1,0 +1,199 @@
+Round,Location,Home.Team,Away.Team,Home.Score,Away.Score
+1,MCG,Carlton,Richmond,64,97
+1,MCG,Collingwood,Geelong Cats,65,72
+1,MCG,Melbourne,Port Adelaide,61,87
+1,Adelaide Oval,Adelaide Crows,Hawthorn,55,87
+1,Marvel Stadium,Western Bulldogs,Sydney Swans,82,65
+1,Gabba,Brisbane Lions,West Coast Eagles,102,58
+1,Marvel Stadium,St Kilda,Gold Coast Suns,85,84
+1,Sydney Showground Stadium,GWS Giants,Essendon,112,40
+1,Optus Stadium,Fremantle,North Melbourne,141,59
+2,MCG,Richmond,Collingwood,66,110
+2,SCG,Sydney Swans,Adelaide Crows,62,88
+2,Marvel Stadium,Essendon,St Kilda,65,76
+2,Adelaide Oval,Port Adelaide,Carlton,88,72
+2,GMHBA Stadium,Geelong Cats,Melbourne,126,46
+2,Optus Stadium,West Coast Eagles,GWS Giants,104,52
+2,Marvel Stadium,North Melbourne,Brisbane Lions,87,107
+2,MCG,Hawthorn,Western Bulldogs,87,106
+2,Metricon Stadium,Gold Coast Suns,Fremantle,61,58
+3,Adelaide Oval,Adelaide Crows,Geelong Cats,75,99
+3,MCG,Melbourne,Essendon,112,130
+3,Marvel Stadium,Carlton,Sydney Swans,74,93
+3,Sydney Showground Stadium,GWS Giants,Richmond,125,76
+3,Gabba,Brisbane Lions,Port Adelaide,107,90
+3,MCG,Collingwood,West Coast Eagles,76,98
+3,Marvel Stadium,Western Bulldogs,Gold Coast Suns,68,73
+3,MCG,Hawthorn,North Melbourne,87,71
+3,Optus Stadium,Fremantle,St Kilda,71,66
+4,SCG,Sydney Swans,Melbourne,78,100
+4,MCG,Collingwood,Western Bulldogs,78,64
+4,GMHBA Stadium,Geelong Cats,GWS Giants,75,79
+4,MCG,Essendon,Brisbane Lions,112,65
+4,Adelaide Oval,Port Adelaide,Richmond,92,99
+4,Marvel Stadium,North Melbourne,Adelaide Crows,71,59
+4,Optus Stadium,West Coast Eagles,Fremantle,69,56
+4,Metricon Stadium,Gold Coast Suns,Carlton,59,57
+4,Marvel Stadium,St Kilda,Hawthorn,74,69
+5,Gabba,Brisbane Lions,Collingwood,61,123
+5,Marvel Stadium,North Melbourne,Essendon,58,116
+5,Optus Stadium,West Coast Eagles,Port Adelaide,53,95
+5,UNSW Canberra Oval,GWS Giants,Fremantle,82,106
+5,MCG,Melbourne,St Kilda,55,95
+5,Marvel Stadium,Richmond,Sydney Swans,89,67
+5,Marvel Stadium,Western Bulldogs,Carlton,57,101
+5,Adelaide Oval,Adelaide Crows,Gold Coast Suns,119,46
+5,MCG,Hawthorn,Geelong Cats,90,113
+6,MCG,Richmond,Melbourne,85,42
+6,MCG,Essendon,Collingwood,69,73
+6,Adelaide Oval,Port Adelaide,North Melbourne,88,72
+6,Metricon Stadium,Gold Coast Suns,Brisbane Lions,62,111
+6,Marvel Stadium,St Kilda,Adelaide Crows,68,97
+6,SCG,Sydney Swans,GWS Giants,79,120
+6,Optus Stadium,Fremantle,Western Bulldogs,88,69
+6,University of Tasmania Stadium,Hawthorn,Carlton,93,88
+6,GMHBA Stadium,Geelong Cats,West Coast Eagles,104,46
+7,Marvel Stadium,Collingwood,Port Adelaide,108,69
+7,MCG,Melbourne,Hawthorn,79,74
+7,UNSW Canberra Oval,GWS Giants,St Kilda,114,70
+7,Gabba,Brisbane Lions,Sydney Swans,103,81
+7,Marvel Stadium,Western Bulldogs,Richmond,99,52
+7,Optus Stadium,West Coast Eagles,Gold Coast Suns,80,57
+7,Marvel Stadium,Carlton,North Melbourne,62,120
+7,MCG,Geelong Cats,Essendon,86,54
+7,Adelaide Oval,Adelaide Crows,Fremantle,51,34
+8,SCG,Sydney Swans,Essendon,77,72
+8,Mars Stadium,Western Bulldogs,Brisbane Lions,92,76
+8,MCG,Carlton,Collingwood,87,106
+8,Metricon Stadium,Gold Coast Suns,Melbourne,60,61
+8,Marvel Stadium,St Kilda,West Coast Eagles,70,88
+8,Adelaide Oval,Port Adelaide,Adelaide Crows,68,88
+8,Marvel Stadium,North Melbourne,Geelong Cats,80,104
+8,MCG,Hawthorn,GWS Giants,71,38
+8,Optus Stadium,Fremantle,Richmond,86,111
+9,Optus Stadium,West Coast Eagles,Melbourne,85,69
+9,MCG,Collingwood,St Kilda,112,71
+9,Gabba,Brisbane Lions,Adelaide Crows,93,92
+9,GMHBA Stadium,Geelong Cats,Western Bulldogs,133,89
+9,Marvel Stadium,Essendon,Fremantle,60,53
+9,Blundstone Arena,North Melbourne,Sydney Swans,72,77
+9,Adelaide Oval,Port Adelaide,Gold Coast Suns,89,51
+9,MCG,Richmond,Hawthorn,95,59
+9,Sydney Showground Stadium,GWS Giants,Carlton,138,45
+10,SCG,Sydney Swans,Collingwood,73,80
+10,University of Tasmania Stadium,Hawthorn,Port Adelaide,80,49
+10,Marvel Stadium,Western Bulldogs,North Melbourne,90,115
+10,Adelaide Oval,Adelaide Crows,West Coast Eagles,73,85
+10,Metricon Stadium,Gold Coast Suns,Geelong Cats,64,91
+10,MCG,Richmond,Essendon,73,50
+10,MCG,Melbourne,GWS Giants,68,94
+10,Marvel Stadium,St Kilda,Carlton,68,55
+10,Optus Stadium,Fremantle,Brisbane Lions,73,72
+11,Marvel Stadium,North Melbourne,Richmond,99,62
+11,MCG,Collingwood,Fremantle,75,79
+11,Sydney Showground Stadium,GWS Giants,Gold Coast Suns,126,43
+11,GMHBA Stadium,Geelong Cats,Sydney Swans,85,63
+11,Gabba,Brisbane Lions,Hawthorn,85,66
+11,TIO Stadium,Melbourne,Adelaide Crows,88,90
+11,Adelaide Arena at Jiangwan Stadium,St Kilda,Port Adelaide,69,139
+11,MCG,Essendon,Carlton,74,33
+11,Optus Stadium,West Coast Eagles,Western Bulldogs,133,72
+12,MCG,Richmond,Geelong Cats,37,104
+12,Marvel Stadium,Carlton,Brisbane Lions,78,63
+12,Metricon Stadium,Gold Coast Suns,North Melbourne,72,99
+12,Adelaide Oval,Adelaide Crows,GWS Giants,82,61
+12,SCG,Sydney Swans,West Coast Eagles,116,71
+12,MCG,Collingwood,Melbourne,98,57
+13,Adelaide Oval,Adelaide Crows,Richmond,101,68
+13,Marvel Stadium,Essendon,Hawthorn,96,77
+13,Riverway Stadium,Gold Coast Suns,St Kilda,76,80
+13,Optus Stadium,Fremantle,Port Adelaide,100,79
+13,Marvel Stadium,Carlton,Western Bulldogs,100,103
+13,Blundstone Arena,North Melbourne,GWS Giants,68,91
+14,Optus Stadium,West Coast Eagles,Essendon,106,71
+14,SCG,Sydney Swans,Hawthorn,82,63
+14,MCG,Melbourne,Fremantle,85,71
+14,Marvel Stadium,St Kilda,Brisbane Lions,59,115
+14,Adelaide Oval,Port Adelaide,Geelong Cats,67,56
+14,Marvel Stadium,Western Bulldogs,Collingwood,73,82
+15,Marvel Stadium,Essendon,GWS Giants,77,71
+15,GMHBA Stadium,Geelong Cats,Adelaide Crows,96,69
+15,MCG,Hawthorn,West Coast Eagles,71,77
+15,SCG,Sydney Swans,Gold Coast Suns,93,51
+15,Marvel Stadium,Collingwood,North Melbourne,37,81
+15,Adelaide Oval,Port Adelaide,Western Bulldogs,41,66
+15,Marvel Stadium,St Kilda,Richmond,70,103
+15,Gabba,Brisbane Lions,Melbourne,107,74
+15,Optus Stadium,Fremantle,Carlton,75,79
+16,MCG,Hawthorn,Collingwood,67,63
+16,MCG,Essendon,Sydney Swans,76,66
+16,Metricon Stadium,Gold Coast Suns,Richmond,58,150
+16,Adelaide Oval,Adelaide Crows,Port Adelaide,44,101
+16,Marvel Stadium,Western Bulldogs,Geelong Cats,71,55
+16,Optus Stadium,Fremantle,West Coast Eagles,31,122
+16,MCG,Carlton,Melbourne,100,105
+16,Blundstone Arena,North Melbourne,St Kilda,112,73
+16,Sydney Showground Stadium,GWS Giants,Brisbane Lions,74,94
+17,Optus Stadium,West Coast Eagles,Collingwood,77,78
+17,SCG,Sydney Swans,Carlton,62,69
+17,University of Tasmania Stadium,Hawthorn,Fremantle,84,53
+17,Marvel Stadium,Essendon,North Melbourne,86,81
+17,Metricon Stadium,Gold Coast Suns,Adelaide Crows,56,151
+17,GMHBA Stadium,Geelong Cats,St Kilda,84,57
+17,MCG,Richmond,GWS Giants,94,67
+17,Marvel Stadium,Western Bulldogs,Melbourne,74,66
+17,Adelaide Oval,Port Adelaide,Brisbane Lions,49,97
+18,Adelaide Oval,Adelaide Crows,Essendon,75,96
+18,MCG,Richmond,Port Adelaide,101,63
+18,Marvel Stadium,Carlton,Gold Coast Suns,99,75
+18,Sydney Showground Stadium,GWS Giants,Collingwood,122,75
+18,Gabba,Brisbane Lions,North Melbourne,87,75
+18,Optus Stadium,Fremantle,Sydney Swans,52,51
+18,MCG,Geelong Cats,Hawthorn,61,85
+18,TIO Traeger Park,Melbourne,West Coast Eagles,78,91
+18,Marvel Stadium,St Kilda,Western Bulldogs,116,89
+19,MCG,Collingwood,Richmond,66,98
+19,University of Tasmania Stadium,Hawthorn,Brisbane Lions,60,87
+19,MCG,Carlton,Adelaide Crows,87,60
+19,Optus Stadium,West Coast Eagles,North Melbourne,121,72
+19,Marvel Stadium,St Kilda,Melbourne,104,85
+19,Adelaide Oval,Port Adelaide,GWS Giants,55,56
+19,Marvel Stadium,Western Bulldogs,Fremantle,113,66
+19,SCG,Sydney Swans,Geelong Cats,80,107
+19,Metricon Stadium,Gold Coast Suns,Essendon,96,106
+20,Marvel Stadium,North Melbourne,Hawthorn,86,64
+20,Marvel Stadium,Essendon,Port Adelaide,67,126
+20,Sydney Showground Stadium,GWS Giants,Sydney Swans,83,81
+20,Optus Stadium,Fremantle,Geelong Cats,95,61
+20,MCG,Melbourne,Richmond,60,93
+20,Adelaide Oval,Adelaide Crows,St Kilda,92,70
+20,MCG,Collingwood,Gold Coast Suns,120,51
+20,Marvel Stadium,Carlton,West Coast Eagles,75,99
+20,Gabba,Brisbane Lions,Western Bulldogs,98,80
+21,UNSW Canberra Oval,GWS Giants,Hawthorn,29,85
+21,MCG,Melbourne,Collingwood,53,70
+21,Adelaide Oval,Port Adelaide,Sydney Swans,103,56
+21,Gabba,Brisbane Lions,Gold Coast Suns,144,53
+21,Marvel Stadium,Essendon,Western Bulldogs,33,137
+21,GMHBA Stadium,Geelong Cats,North Melbourne,69,14
+21,Marvel Stadium,St Kilda,Fremantle,72,69
+21,MCG,Richmond,Carlton,73,45
+21,Optus Stadium,West Coast Eagles,Adelaide Crows,90,80
+22,MCG,Melbourne,Sydney Swans,42,95
+22,MCG,Carlton,St Kilda,78,74
+22,Gabba,Brisbane Lions,Geelong Cats,75,74
+22,Adelaide Oval,Adelaide Crows,Collingwood,48,114
+22,Marvel Stadium,North Melbourne,Port Adelaide,144,58
+22,Optus Stadium,Fremantle,Essendon,55,87
+22,MCG,Richmond,West Coast Eagles,88,82
+22,Sydney Showground Stadium,GWS Giants,Western Bulldogs,65,126
+22,Marvel Stadium,Hawthorn,Gold Coast Suns,118,48
+23,MCG,Collingwood,Essendon,76,65
+23,SCG,Sydney Swans,St Kilda,109,64
+23,Blundstone Arena,North Melbourne,Melbourne,88,83
+23,GMHBA Stadium,Geelong Cats,Carlton,129,61
+23,Metricon Stadium,Gold Coast Suns,GWS Giants,55,127
+23,Optus Stadium,West Coast Eagles,Hawthorn,67,105
+23,Mars Stadium,Western Bulldogs,Adelaide Crows,121,87
+23,MCG,Richmond,Brisbane Lions,82,55
+23,Adelaide Oval,Port Adelaide,Fremantle,110,67

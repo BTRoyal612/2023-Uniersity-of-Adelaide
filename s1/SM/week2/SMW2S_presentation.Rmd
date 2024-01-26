@@ -1,0 +1,309 @@
+---
+title: |
+  | Statistical Modelling III
+  | Workshop 2 - into the unknown
+author: John Maclean
+date: Week 2
+output:
+  revealjs::revealjs_presentation:
+    fig_width: 7
+    fig_height: 6
+    fig_caption: true
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(
+  obsecho = TRUE, 
+  fig.width = 6, 
+  fig.asp = 0.618, 
+  out.width = "70%",
+  fig.align = "center", 
+  root.dir = '../'
+)
+pacman::p_load(revealjs,tidyverse, tidymodels, janitor, ggplot2, DiagrammeR)
+#apa theme
+apatheme=theme_bw()+
+  theme(panel.grid.major=element_blank(),
+        panel.grid.minor=element_blank(),
+        panel.border=element_blank(),
+        axis.line=element_line(),
+        text=element_text(family='Times'),
+        legend.title=element_blank(),
+        axis.text.y=element_text(size = 8),
+        axis.text.x=element_text(size = 8))
+theme_set(apatheme) #change as you like
+```
+
+Load packages
+```{r}
+pacman::p_load(tidyverse, gglm, janitor, leaflet)
+```
+
+
+
+
+# EDA
+
+**E**xploratory **D**ata **A**nalysis
+
+## Why EDA:
+
+When given data and a goal, you need to choose a good model for your data. How do you do that?
+
+Many students begin by fitting a model. That might sound reasonable, but we're going to explore why it should not be your first step. 
+
+<!-- ## Case Study -->
+
+<!-- Consider the goal: "model cty using the predictors year, displ and hwy from the mpg dataset." As a first step you try -->
+
+```{r, echo=FALSE}
+data(mpg)
+lm1 <- lm(cty ~  year + displ + hwy, data = mpg)
+```
+
+
+## Model diagnostics
+
+```{r, echo=FALSE}
+
+
+gglm(lm1)
+```
+
+
+
+## Model diagnostics
+
+Mentimeter questions:
+
+Can you use model diagnostics to determine if your model is doing well?
+
+Can you use model diagnostics to determine how to improve your model? 
+
+## The role of EDA
+
+
+Exploring your data _first_ helps you choose a good first model, and is crucial when you need to investigate and improve your model. Good EDA helps you discover the reasons for poor model diagnostics and prevents you focussing on the wrong data variables as predictors. 
+
+<!-- ```{r, echo=FALSE} -->
+<!-- p2 <- ggplot(mpg, aes(displ, cty,color=year)) + geom_point() -->
+<!-- p3 <- ggplot(mpg, aes(hwy, cty,color=displ)) + geom_point() -->
+
+<!--  p2 | p3 -->
+<!-- ``` -->
+
+
+# Case Study in EDA
+
+## Get data 
+
+```{r, message=FALSE}
+isit <- read_delim("workshops/ZuurData/Isit.txt") #read_delim will infer the delimitor
+```
+
+## Look at variables
+
+```{r, echo=FALSE}
+isit
+```
+
+## Recap of variables
+
+* data comes from deep sea dives with a measuring instrument
+* SampleDepth measures depth at which observation was made
+* Sources counts the number of glowing things observed
+* Longitude and Latitude show where the dive was made. 
+
+
+## EDA for isit
+
+Give it a go! The advice is 'make scatterplots,' but the skill is:
+
+* note variable types
+* note relationships that seem important and unimportant
+* try and piece together the 'story of your data': why was it recorded (i.e. how may it affect the response variable)
+
+## My attempt
+
+Rescaling the depth data to be in km and record Station as a factor:
+
+```{r}
+isit <- isit %>% 
+  mutate( #mutates the columns of a tibble
+    SampleDepth = SampleDepth/1000,
+    BottomDepth = BottomDepth/1000,
+    Station = as.factor(Station))
+```
+
+## Look at variables
+
+```{r, echo=FALSE}
+isit
+```
+
+
+## Sources vs Sample Depth and Station. 
+
+
+
+```{r}
+p <- ggplot(isit, aes(SampleDepth,Sources, color=Month)) +
+  facet_wrap(~Station) +
+  geom_point() +
+  labs(caption="ggplot makes your life easy")
+```
+
+## Sources vs Sample Depth and Station. 
+
+```{r, echo=FALSE}
+p
+```
+
+## location of data:
+
+```{r}
+isit %>% ggplot(aes(Longitude,Latitude)) + geom_point()
+```
+
+
+## ...on a map:
+
+```{r}
+m <- isit %>% leaflet() %>%
+  addTiles() %>%  # Add default OpenStreetMap map tiles
+  addCircles(
+    lng = ~Longitude, lat = ~Latitude, #add isit data; translate names in isit for leaflet
+    label  = ~Station, #with labels!
+    #labelOptions = labelOptions(noHide = T, style = list("font-size" = "8px"))
+  ) 
+```
+
+## ...on a map:
+
+```{r, echo=FALSE}
+m
+```
+
+
+## ...on a _bathymetric_ map:
+
+```{r, echo=FALSE}
+# start basemap
+map <- isit %>%  leaflet() %>% 
+  
+  # add ocean basemap
+  addProviderTiles(providers$Esri.OceanBasemap) %>%
+  
+  # add another layer with place names
+  addProviderTiles(providers$Hydda.RoadsAndLabels, group = 'Place names') %>%
+  
+  # add graticules from a NOAA webserver
+  addWMSTiles(
+    "https://gis.ngdc.noaa.gov/arcgis/services/graticule/MapServer/WMSServer/",
+    layers = c("1-degree grid", "5-degree grid"),
+    options = WMSTileOptions(format = "image/png8", transparent = TRUE),
+    attribution = NULL,group = 'Graticules') %>%
+  
+  # focus map in a certain area / zoom level
+  setView(lng = -15, lat = 50, zoom = 7) %>%
+  
+  #add our data, finally
+  addCircles(
+    lng = ~Longitude, lat = ~Latitude, #add isit data; translate names in isit for leaflet
+    label  = ~Station, #with labels!
+    color = "#e03da7"
+  ) 
+
+map
+```
+
+# Harvesting EDA
+
+***
+
+* _spatial_ correlation: nearby stations may behave more similarly. If all the stations were very far apart we might justify applying a linear model to each independently, or to clusters of stations, but they are close to each other. We can also see some difficulties; some nearby stations have similar data. This is a major violation of independence! (Discuss: could apply a linear model to each station _independently_, but that is wrong, or could apply one linear model to all stations, but that is also wrong.)
+* nonlinearity: we could try transforming this data, so perhaps not a big deal.
+* heteroscedasticity: technically we can't see this issue yet because we haven't fit a model. _Possibly_ addressed by transforming data. 
+* _temporal_ correlations: are samples independent? How does month and season affect the data?
+
+
+## Modelling - first attempts
+
+Let's have a go at a single station:
+
+```{r, echo=FALSE}
+isit_s1 <- isit %>% filter(Station == 1) #define isit_s1
+
+isit_s1 <- isit_s1 %>% mutate(
+  log_Src = log(Sources),
+  log_Dpth = log(SampleDepth)
+) #for now, this naïve approach to transforming data will do. 
+
+isit_s1 %>% ggplot(aes(SampleDepth,log_Src)) +geom_point() #experimentation shows this relationship is roughly linear
+
+isit_s1 <- isit_s1 %>% 
+  filter(Sources>0) #remove -Infs from dataset (should not do, but the model is doomed anyway)
+```
+
+## Linear model:
+
+```{r}
+model_s1 <- lm(log_Src ~ SampleDepth, data = isit_s1)
+summary(model_s1)
+```
+
+Look at that p-value! That effect size! Are we good?
+
+## Assumption Checking
+
+```{r}
+gglm(model_s1)
+```
+
+## Outlook 
+
+Major issues including heteroscedasticity... 
+
+If interested, you can make everything so much worse. Try modelling more than one station at a time.  
+
+# Recap
+
+* EDA
+* role of EDA above model diagnostics or summaries when it comes to selecting model predictors, transforming data, improving models
+* major unresolved issues when trying to model a complicated dataset
+
+# Future discussion
+
+In these workshops, we'll explore beyond linear modelling and address some of the issues raised by the first two workshops. 
+
+## Where are we going?
+
+Recall four key assumptions for linear models:
+
+* linear response (possibly after transforming data)
+* homoscedasticity
+* normally distributed residuals
+* independence
+
+## Where are we going?
+
+
+* modelling nonlinear data relationships without transforming the data (Wk 3-4), 
+* dealing with heteroscedasticity by including different variances in the linear regression model, or
+* assuming different _distributions_ for the residuals (Wk 5-7),
+* modelling nested data with mixed effects models (Wk 8-10)
+* handling spatial correlations in mixed effects models (Wk 11-12)
+
+We may consider temporally correlated data, but in case we don't get there you should know - there is an Honours course on the topic, taught by Mel Humphries. Also see the Data Science course taught by Jono Tuke. Also... my Honours course. 
+
+
+
+
+
+
+
+
+
+
+
+

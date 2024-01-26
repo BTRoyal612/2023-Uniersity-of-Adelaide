@@ -1,0 +1,19 @@
+---
+title: "Test1"
+author: "Gia Bao hoang"
+date: "2023-03-23"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(
+  echo = TRUE, 
+  fig.width = 6, 
+  fig.asp = 0.618, 
+  out.width = "70%",
+  fig.align = "center", 
+  root.dir = "../"
+)
+pacman::p_load(tidyverse, tidymodels, janitor, ggplot2, broom)
+```
+

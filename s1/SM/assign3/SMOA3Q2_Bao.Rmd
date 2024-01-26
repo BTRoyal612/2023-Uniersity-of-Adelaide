@@ -1,0 +1,159 @@
+---
+title: "Assignment3Q2"
+author: "Gia Bao hoang"
+date: "2023-05-18"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# Q2
+  Load the package
+```{r}
+pacman::p_load(tidyverse, gglm, skimr, MASS, janitor, ggplot2)
+```
+
+## (a)
+```{r}
+data <- read.csv("lung_cancer.csv")
+data
+```
+
+  Convert city and age to factor
+```{r}
+data <- data %>% 
+  mutate(city = as.factor(city),
+         age = as.factor(age))
+data
+```
+
+## (b)
+ -EDA
+```{r}
+data <- clean_names(data)
+skim_without_charts(data)
+```
+
+ -Relationship between cases and age
+```{r}
+data %>% ggplot(aes(age, cases)) + geom_boxplot()
+```
+
+ -Relationship between cases and city
+```{r}
+data %>% ggplot(aes(city, cases)) + geom_boxplot()
+```
+
+ -Proportion of cases to population and age
+```{r}
+data <- data %>% 
+  mutate(
+    prop_cases = cases / pop
+  )
+data %>% ggplot(aes(age, prop_cases)) + geom_boxplot()
+```
+
+ -Proportion of cases to population and city
+```{r}
+data %>% ggplot(aes(city, prop_cases)) + geom_boxplot()
+```
+
+
+## (c)
+```{r}
+M1 <- glm(cases ~ 1, offset=log(pop), family=poisson, data=data)
+summary(M1)
+```
+
+## (d)
+```{r}
+M2 <- glm(cases ~ age + city, offset=log(pop), family=poisson, data=data)
+summary(M2)
+```
+
+## (d)
+```{r}
+M3 <- glm(cases ~ age + city + log(pop), offset=log(pop), family=poisson, data=data)
+summary(M3)
+```
+
+## (f)
+  Both the p-value of the Chi-square test and the residual deviance suggest age 
+  and city significantly predict lung cancer rates. Firstly, the highly 
+  significant p-value (less than 0.05) indicates that M2, which includes age 
+  and city, is a significantly better fit to the data than M1. Secondly, the 
+  lower residual deviance of M2 demonstrates that it explains more of the
+  variance the data compared to M1
+
+```{r}
+anova(M1, M2, test="Chisq")
+```
+
+## (g)
+  Despite M3 has a marginally lower AIC, the additional complexity it introduces
+  may not justify the minimal improvement in model fit. Therefore, considering 
+  the balance between simplicity and predictive power, M2 is selected as the 
+  preferable model.
+```{r}
+AIC(M1)
+AIC(M2)
+AIC(M3)
+```
+
+## (h)
+  In M2, the coefficient for the "age55-59" category is approximately 1.1010. 
+  Being a categorical variable, this coefficient signifies the log difference 
+  in the expected count of lung cancer cases between the "age55-59" group and 
+  the reference group, "age40-54". Holding the city variable constant, the 
+  expected count of lung cancer cases for individuals in the "age55-59" group 
+  is about exp(1.1010) or roughly 3.0072 times higher than that of individuals 
+  in the "age40-54" group.
+```{r}
+summary(M2)$coefficients
+```
+
+## (i)
+```{r}
+data <- data %>% 
+  add_column(
+    M2_res = residuals(M2, type="pearson")
+  )
+```
+
+## (j) 
+i. The residuals versus fitted values.
+```{r}
+data %>%
+  ggplot(aes(fitted(M2), M2_res)) + geom_point() +
+  geom_smooth()
+```
+
+ii. The residuals versus age.
+```{r}
+data %>%
+  ggplot(aes(age, M2_res)) + geom_boxplot() 
+```
+
+iii. The residuals versus city.
+```{r}
+data %>%
+  ggplot(aes(city, M2_res)) + geom_boxplot() 
+```
+
+## (k)
+  The observed probability of five or fewer lung cancer cases in Fredericia's 
+  40-54 age group, given the rate predicted by Model 2 (M2), is 0.0044. As this 
+  value is less than the commonly accepted threshold of 0.05, it is deemed 
+  statistically significant. This suggests that the actual number of cases is 
+  significantly lower than what M2 predicts. Therefore, we can interpret this 
+  as a significant decrease in the lung cancer cases in this particular age 
+  group in Fredericia, possibly indicating that certain factors, like the health
+  campaign, may have effectively reduced the incidence of lung cancer
+```{r}
+new_data <- data.frame(age="40-54", city="Fredericia", pop=4000)
+lambda_hat <- predict(M2, newdata=new_data, type="response")
+prob <- ppois(5, lambda=lambda_hat)
+prob
+```

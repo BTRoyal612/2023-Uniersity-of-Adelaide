@@ -1,0 +1,106 @@
+---
+title: "Workshop 2"
+author: "Gia Bao hoang"
+date: week 2
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(
+  obsecho = TRUE, 
+  fig.width = 6, 
+  fig.asp = 0.618, 
+  out.width = "70%",
+  fig.align = "center", 
+  root.dir = '../'
+)
+pacman::p_load(tidyverse, dplyr, gglm)
+```
+
+# Goal
+ 1. Learn a little R.
+ 2. Practice dealing with data/goal structures.
+ 3. Identify limitation of linear models.
+
+# Load Data
+```{r}
+df <- read_delim("ISIT.txt", show_col_types = FALSE)
+df
+```
+
+# A look at pipes
+
+ The `%>%` symbol is called a _pipe_.
+ 
+ A pipe puts what is on its left hand side as an argument to the function on its
+ right hand side 
+ 
+```{r}
+test_lm <- lm(Sources ~ SampleDepth, data=df)
+#plot(test_lm)
+test_lm %>% plot()
+```
+ 
+ Why use pipes?
+ 
+ Example: 
+  1. Take df
+  2. Convert SampleDepth to SampleDepth/1000
+  3. Select Station 1.
+  4.Make plot of SampleDepth vs Sources
+  
+```{r}
+ggplot(mutate(filter(df, Station == 1), SampleDepth = SampleDepth/1000), 
+       aes(SampleDepth, Sources)) + geom_point()
+```
+
+
+```{r}
+df %>% filter(Station == 1) %>%
+  mutate(SampleDepth = SampleDepth/1000) %>% 
+  ggplot(aes(SampleDepth, Sources)) + 
+  geom_point()
+```
+
+# EDA
+
+Rescaling the depth data to be in km and record Station as a factor
+```{r}
+df <- df %>% 
+  mutate( #mutates the columns of a tibble
+    SampleDepth = SampleDepth/1000,
+    BottomDepth = BottomDepth/1000,
+    Station = as.factor(Station))
+df
+```
+
+Plot Sources against SampleDepth
+```{r}
+df %>% ggplot(aes(SampleDepth, Sources)) +
+  geom_point()
+```
+Sources vs SampleDepth by Station
+```{r}
+df %>% ggplot(aes(SampleDepth, Sources, color=Month)) +
+  facet_wrap(~Station) +
+  geom_point()
+```
+
+Sources vs SampleDepth by Month
+```{r}
+df %>% ggplot(aes(SampleDepth, Sources, color=Station)) +
+  facet_wrap(~Month) +
+  geom_point()
+```
+
+```{r}
+station1_df <- df %>% filter(Station == 1) %>% 
+  filter(Sources > 0) %>% 
+  mutate(LogSources = log(Sources))
+
+station1_lm <- lm(LogSources ~ SampleDepth, data = station1_df)
+gglm(station1_lm)
+```
+
+
+ 

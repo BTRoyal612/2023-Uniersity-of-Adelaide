@@ -1,0 +1,114 @@
+---
+title: "Workshop6"
+author: "Gia Bao hoang"
+date: "2023-04-24"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(
+  obsecho = TRUE, 
+  fig.width = 6, 
+  fig.asp = 0.618, 
+  out.width = "70%",
+  fig.align = "center", 
+  root.dir = '../'
+)
+pacman::p_load(tidyverse, tidymodels, janitor, ggplot2, nlme)
+```
+
+Load the data
+```{r}
+clams <- read_delim("Clams.txt")
+clams <- clams %>% 
+  janitor::clean_names() %>% 
+  mutate(month = as_factor(month))
+clams
+```
+
+simple EDA
+```{r}
+clams %>% ggplot(aes(length, afd)) + geom_point() 
+clams %>% ggplot(aes(month, afd)) + geom_boxplot() 
+clams %>% ggplot(aes(length, afd)) + geom_point() +
+  facet_wrap(~month)
+
+clams %>% ggplot(aes(lnlength, lnafd)) + geom_point() 
+clams %>% ggplot(aes(month, lnafd)) + geom_boxplot() 
+clams %>% ggplot(aes(lnlength, lnafd)) + geom_point() +
+  facet_wrap(~month)
+```
+
+Fit the linear model 
+```{r}
+m1 <- lm(lnafd ~ month * lnlength, data=clams)
+plot(m1)
+summary(m1)
+```
+
+Test the GLS
+```{r}
+m2 <- gls(lnafd ~ month*lnlength, data=clams)
+summary(m2)
+plot(m2)
+```
+ Look at residuals per month
+```{r}
+res <- resid(m2)
+coplot(res ~ lnlength | month, data = clams)
+```
+ 
+  The "fixed variance" 
+```{r}
+v1_fixed <- varFixed(~lnlength)
+m3 <- gls(data=clams, lnafd ~ month * lnlength, weights = v1_fixed)
+summary(m3)
+plot(m3)
+anova(m2,m3)
+```
+
+ The "VarIndent" structure
+```{r}
+v2_ident <- varIdent(form = ~ 1 | month)
+m4 <- gls(data=clams, lnafd ~ month * lnlength, weights = v2_ident)
+summary(m4)
+plot(m4)
+anova(m2,m4)
+```
+
+ The "VarPower" structure
+```{r}
+v3_power <- varPower(form = ~lnlength)
+m5 <- gls(data=clams, lnafd ~ month * lnlength, weights = v3_power)
+summary(m5)
+plot(m5)
+anova(m2,m5)
+```
+
+```{r}
+v4_constpower <- varConstPower(form = ~lnlength)
+m6 <- gls(data=clams, lnafd ~ month * lnlength, weights = v4_constpower)
+summary(m6)
+plot(m6)
+anova(m2,m6)
+```
+
+
+```{r}
+v5_combopower <- varPower(form = ~lnlength | month)
+m7 <- gls(data=clams, lnafd ~ month * lnlength, weights = v5_combopower)
+summary(m7)
+plot(m7)
+anova(m2,m7)
+```
+
+```{r}
+v6_final_combo <- varComb(
+  varPower(form = ~ length),
+  varIdent(form = ~ 1 | month)
+)
+m8 <- gls(data=clams, lnafd ~ month * lnlength, weights = v6_final_combo)
+summary(m8)
+plot(m8)
+anova(m2,m8)
+```

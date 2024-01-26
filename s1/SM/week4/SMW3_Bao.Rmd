@@ -1,0 +1,58 @@
+---
+title: "Workshop3"
+author: "Gia Bao hoang"
+date: "2023-03-20"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(
+  obsecho = TRUE, 
+  fig.width = 6, 
+  fig.asp = 0.618, 
+  out.width = "70%",
+  fig.align = "center", 
+  root.dir = '../'
+)
+pacman::p_load(tidyverse, gglm, broom, mgcv)
+```
+
+
+ Load the data
+```{r}
+X <- seq(0,3,by=0.01) #predictor
+bnd <-mean(X) #boundary between linear and nonlinear response
+a <- 4 #arbitrary
+b <- -2*bnd*a #match first derivatives at X=7
+c <- -bnd^2*a-bnd*b #match value at X=7
+Y <- X + (X>bnd) * sin(a*X^2 + b*X + c) #combines linear and nonlinear response
+s = 0.07
+Y <- Y + rnorm(length(X),sd=s)#add noise
+
+#make dataframe
+df <- tibble(X=X, Y=Y)
+```
+ Plot the data
+```{r}
+p <- df %>% ggplot(aes(X,Y)) + geom_point()
+p
+```
+
+# Try out GAM
+```{r}
+gam_model <- mgcv::gam(Y ~ s(X, 
+                             k=10 # order of polynomial
+                             ), data = df)
+summary(gam_model)
+```
+- Plot the model
+```{r}
+plot(gam_model,residuals = TRUE, se = FALSE)
+```
+
+# Load the isit dataset
+```{r}
+isit <- read_delim("ISIT.txt")
+head(isit)
+```
+

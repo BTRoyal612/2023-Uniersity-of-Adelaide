@@ -1,0 +1,112 @@
+---
+title: "Workshop5"
+author: "Gia Bao hoang"
+date: "2023-04-03"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(
+  echo = TRUE, 
+  fig.width = 6, 
+  fig.asp = 0.618, 
+  out.width = "70%",
+  fig.align = "center", 
+  root.dir = "../"
+)
+```
+
+ Load the package
+```{r}
+pacman::p_load(tidyverse, gglm, broom, nlme)
+```
+
+ Load the data
+```{r}
+squid <- read_delim(("Squid.txt"), delim = "\t")
+head(squid)
+```
+
+# EDA
+  Use Month as a factor
+```{r}
+squid <- squid %>% 
+  mutate(
+    MONTH = as.factor(MONTH)
+  )
+```
+
+ Scatter plot between response vs predictor
+```{r}
+squid %>% 
+  ggplot(aes(DML, Testisweight)) + 
+  geom_point() 
+```
+
+```{r}
+squid %>% 
+  ggplot(aes(MONTH, Testisweight)) + 
+  geom_boxplot() 
+```
+
+```{r}
+squid %>% 
+  ggplot(aes(DML, Testisweight)) + 
+  geom_point() +
+  facet_wrap(~MONTH)
+```
+
+  Fit the linear model using gls
+```{r}
+squid_lm <- gls(data=squid, Testisweight ~ MONTH * DML)
+summary(squid_lm)
+plot(squid_lm)
+```
+
+ The "fixed variance" 
+```{r}
+v1_fixed <- varFixed(~DML)
+squid_lm1 <- gls(data=squid, Testisweight ~ MONTH * DML, weights = v1_fixed)
+summary(squid_lm1)
+plot(squid_lm1)
+```
+```{r}
+anova(squid_lm, squid_lm1)
+```
+
+ The "VarIndent" structure
+```{r}
+v2_ident <- varIdent(form = ~ 1 | MONTH)
+squid_lm2 <- gls(data=squid, Testisweight ~ MONTH * DML, weights = v2_ident)
+summary(squid_lm2)
+plot(squid_lm2)
+```
+
+```{r}
+anova(squid_lm, squid_lm2)
+```
+
+ The "VarPower" structure
+```{r}
+v3_power <- varPower(form = ~DML)
+squid_lm3 <- gls(data=squid, Testisweight ~ MONTH * DML, weights = v3_power)
+summary(squid_lm3)
+plot(squid_lm3)
+```
+
+```{r}
+anova(squid_lm,squid_lm3)
+```
+
+
+```{r}
+v4_constpower <- varConstPower(form = ~DML)
+squid_lm4 <- gls(data=squid, Testisweight ~ MONTH * DML, weights = v4_constpower)
+summary(squid_lm4)
+plot(squid_lm4)
+```
+
+```{r}
+anova(squid_lm, squid_lm4)
+```
+
