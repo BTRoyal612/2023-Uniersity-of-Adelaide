@@ -1,0 +1,15 @@
+Options:
+1. Push Value
+2. Push Operation
+3. Pop Result
+4. Delayed Pop Result for (millisecond)?
+5. Is the stack empty?
+6. Exit
+Choose an option: Choose an option: Choose an option: Choose an option: Choose an option: Choose an option: Result: -1
+Choose an option: Choose an option: Choose an option: Choose an option: Choose an option: Choose an option: Result: 999
+Choose an option: Choose an option: Choose an option: Choose an option: Choose an option: Result: 150
+Choose an option: Choose an option: Choose an option: Choose an option: Choose an option: Result: 2
+Choose an option: Result: true
+Choose an option: Choose an option: Result: false
+Choose an option: Delayed Result: 99
+Choose an option: Exiting...
