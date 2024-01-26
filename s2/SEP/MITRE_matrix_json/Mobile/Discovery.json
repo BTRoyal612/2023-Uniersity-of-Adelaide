@@ -1,0 +1,73 @@
+{
+    "id": "TA0032",
+    "name": "Discovery",
+    "description": "The adversary is trying to figure out your environment.",
+    "techniques":
+    [
+        {
+            "id": "T1420",
+            "name": "File and Directory Discovery",
+            "description": "Adversaries may enumerate files and directories or search in specific device locations for desired information within a filesystem. Adversaries may use the information from File and Directory Discovery during automated discovery to shape follow-on behaviors, including deciding if the adversary should fully infect the target and/or attempt specific actions.",
+            "sub-techniques": []
+        },
+        {
+            "id": "T1430",
+            "name": "Location Tracking",
+            "description": "Adversaries may track a device\u2019s physical location through use of standard operating system APIs via malicious or exploited applications on the compromised device.",
+            "sub-techniques": [
+                {
+                    "id": "T1430.001",
+                    "name": "Remote Device Management Services",
+                    "description": "An adversary may use access to cloud services (e.g. Google's Android Device Manager or Apple iCloud's Find my iPhone) or to an enterprise mobility management (EMM)/mobile device management (MDM) server console to track the location of mobile devices managed by the service."
+                },
+                {
+                    "id": "T1430.002",
+                    "name": "Impersonate SS7 Nodes",
+                    "description": "Adversaries may exploit the lack of authentication in signaling system network nodes to track the to track the location of mobile devices by impersonating a node."
+                }
+            ]
+        },
+        {
+            "id": "T1423",
+            "name": "Network Service Scanning",
+            "description": "Adversaries may attempt to get a listing of services running on remote hosts, including those that may be vulnerable to remote software exploitation. Methods to acquire this information include port scans and vulnerability scans from the mobile device. This technique may take advantage of the mobile device's access to an internal enterprise network either through local connectivity or through a Virtual Private Network (VPN).",
+            "sub-techniques": []
+        },
+        {
+            "id": "T1424",
+            "name": "Process Discovery",
+            "description": "Adversaries may attempt to get information about running processes on a device. Information obtained could be used to gain an understanding of common software/applications running on devices within a network. Adversaries may use the information from Process Discovery during automated discovery to shape follow-on behaviors, including whether or not the adversary fully infects the target and/or attempts specific actions.",
+            "sub-techniques": []
+        },
+        {
+            "id": "T1418",
+            "name": "Software Discovery",
+            "description": "Adversaries may attempt to get a listing of applications that are installed on a device. Adversaries may use the information from Software Discovery during automated discovery to shape follow-on behaviors, including whether or not to fully infect the target and/or attempts specific actions.",
+            "sub-techniques": [
+                {
+                    "id": "T1418.001",
+                    "name": "Security Software Discovery",
+                    "description": "Adversaries may attempt to get a listing of security applications and configurations that are installed on a device. This may include things such as mobile security products. Adversaries may use the information from Security Software Discovery during automated discovery to shape follow-on behaviors, including whether or not to fully infect the target and/or attempt specific actions."
+                }
+            ]
+        },
+        {
+            "id": "T1426",
+            "name": "System Information Discovery",
+            "description": "Adversaries may attempt to get detailed information about a device\u2019s operating system and hardware, including versions, patches, and architecture. Adversaries may use the information from System Information Discovery during automated discovery to shape follow-on behaviors, including whether or not to fully infects the target and/or attempts specific actions.",
+            "sub-techniques": []
+        },
+        {
+            "id": "T1422",
+            "name": "System Network Configuration Discovery",
+            "description": "Adversaries may look for details about the network configuration and settings, such as IP and/or MAC addresses, of operating systems they access or through information discovery of remote systems.",
+            "sub-techniques": []
+        },
+        {
+            "id": "T1421",
+            "name": "System Network Connections Discovery",
+            "description": "Adversaries may attempt to get a listing of network connections to or from the compromised device they are currently accessing or from remote systems by querying for information over the network.",
+            "sub-techniques": []
+        }
+    ]
+}

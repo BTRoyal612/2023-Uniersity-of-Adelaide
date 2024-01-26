@@ -1,0 +1,48 @@
+{
+    "id": "TA0027",
+    "name": "Initial Access",
+    "description": "The adversary is trying to get into your device.",
+    "techniques":
+    [
+        {
+            "id": "T1456",
+            "name": "Drive-By Compromise",
+            "description": "Adversaries may gain access to a system through a user visiting a website over the normal course of browsing. With this technique, the user's web browser is typically targeted for exploitation, but adversaries may also use compromised websites for non-exploitation behavior such as acquiring an Application Access Token.",
+            "sub-techniques": []
+        },
+        {
+            "id": "T1461",
+            "name": "Lockscreen Bypass",
+            "description": "An adversary with physical access to a mobile device may seek to bypass the device\u2019s lockscreen. Several methods exist to accomplish this, including:",
+            "sub-techniques": []
+        },
+        {
+            "id": "T1458",
+            "name": "Replication Through Removable Media",
+            "description": "Adversaries may move onto devices by exploiting or copying malware to devices connected via USB. In the case of Lateral Movement, adversaries may utilize the physical connection of a device to a compromised or malicious charging station or PC to bypass application store requirements and install malicious applications directly. In the case of Initial Access, adversaries may attempt to exploit the device via the connection to gain access to data stored on the device. Examples of this include:",
+            "sub-techniques": []
+        },
+        {
+            "id": "T1474",
+            "name": "Supply Chain Compromise",
+            "description": "Adversaries may manipulate products or product delivery mechanisms prior to receipt by a final consumer for the purpose of data or system compromise.",
+            "sub-techniques": [
+                {
+                    "id": "T1474.001",
+                    "name": "Compromise Software Dependencies and Development Tools",
+                    "description": "Adversaries may manipulate products or product delivery mechanisms prior to receipt by a final consumer for the purpose of data or system compromise. Applications often depend on external software to function properly. Popular open source projects that are used as dependencies in many applications may be targeted as a means to add malicious code to users of the dependency."
+                },
+                {
+                    "id": "T1474.002",
+                    "name": "Compromise Hardware Supply Chain",
+                    "description": "Adversaries may manipulate hardware components in products prior to receipt by a final consumer for the purpose of data or system compromise. By modifying hardware or firmware in the supply chain, adversaries can insert a backdoor into consumer networks that may be difficult to detect and give the adversary a high degree of control over the system."
+                },
+                {
+                    "id": "T1474.003",
+                    "name": "Compromise Software Supply Chain",
+                    "description": "Adversaries may manipulate application software prior to receipt by a final consumer for the purpose of data or system compromise. Supply chain compromise of software can take place in a number of ways, including manipulation of the application source code, manipulation of the update/distribution mechanism for that software, or replacing compiled releases with a modified version."
+                }
+            ]
+        }
+    ]
+}

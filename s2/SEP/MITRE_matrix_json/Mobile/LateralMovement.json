@@ -1,0 +1,20 @@
+{
+    "id": "TA0033",
+    "name": "Lateral Movement",
+    "description": "The adversary is trying to move through your environment.",
+    "techniques":
+    [
+        {
+            "id": "T1428",
+            "name": "Exploitation of Remote Services",
+            "description": "Adversaries may exploit remote services of enterprise servers, workstations, or other resources to gain unauthorized access to internal systems once inside of a network. Adversaries may exploit remote services by taking advantage of a mobile device\u2019s access to an internal enterprise network through local connectivity or through a Virtual Private Network (VPN). Exploitation of a software vulnerability occurs when an adversary takes advantage of a programming error in a program, service, or within the operating system software or kernel itself to execute adversary-controlled code. A common goal for post-compromise exploitation of remote services is for lateral movement to enable access to a remote system.",
+            "sub-techniques": []
+        },
+        {
+            "id": "T1458",
+            "name": "Replication Through Removable Media",
+            "description": "Adversaries may move onto devices by exploiting or copying malware to devices connected via USB. In the case of Lateral Movement, adversaries may utilize the physical connection of a device to a compromised or malicious charging station or PC to bypass application store requirements and install malicious applications directly. In the case of Initial Access, adversaries may attempt to exploit the device via the connection to gain access to data stored on the device. Examples of this include:",
+            "sub-techniques": []
+        }
+    ]
+}

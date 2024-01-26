@@ -1,0 +1,26 @@
+{
+    "id": "TA0036",
+    "name": "Exfiltration",
+    "description": "The adversary is trying to steal data.",
+    "techniques":
+    [
+        {
+            "id": "T1639",
+            "name": "Exfiltration Over Alternative Protocol",
+            "description": "Adversaries may steal data by exfiltrating it over a different protocol than that of the existing command and control channel. The data may also be sent to an alternate network location from the main command and control server.",
+            "sub-techniques": [
+                {
+                    "id": "T1639.001",
+                    "name": "Exfiltration Over Unencrypted Non-C2 Protocol",
+                    "description": "Adversaries may steal data by exfiltrating it over an un-encrypted network protocol other than that of the existing command and control channel. The data may also be sent to an alternate network location from the main command and control server."
+                }
+            ]
+        },
+        {
+            "id": "T1646",
+            "name": "Exfiltration Over C2 Channel",
+            "description": "Adversaries may steal data by exfiltrating it over an existing command and control channel. Stolen data is encoded into the normal communications channel using the same protocol as command and control communications.",
+            "sub-techniques": []
+        }
+    ]
+}

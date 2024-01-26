@@ -1,0 +1,80 @@
+{
+    "id": "TA0108",
+    "name": "Initial Access",
+    "description": "The adversary is trying to get into your ICS environment.",
+    "techniques":
+    [
+        {
+            "id": "T0817",
+            "name": "Drive-by Compromise",
+            "description": "Adversaries may gain access to a system during a drive-by compromise, when a user visits a website as part of a regular browsing session. With this technique, the user's web browser is targeted and exploited simply by visiting the compromised website.",
+            "sub-techniques": []
+        },
+        {
+            "id": "T0819",
+            "name": "Exploit Public-Facing Application",
+            "description": "Adversaries may leverage weaknesses to exploit internet-facing software for initial access into an industrial network. Internet-facing software may be user applications, underlying networking implementations, an assets operating system, weak defenses, etc. Targets of this technique may be intentionally exposed for the purpose of remote management and visibility.",
+            "sub-techniques": []
+        },
+        {
+            "id": "T0866",
+            "name": "Exploitation of Remote Services",
+            "description": "Adversaries may exploit a software vulnerability to take advantage of a programming error in a program, service, or within the operating system software or kernel itself to enable remote service abuse. A common goal for post-compromise exploitation of remote services is for initial access into and lateral movement throughout the ICS environment to enable access to targeted systems.",
+            "sub-techniques": []
+        },
+        {
+            "id": "T0822",
+            "name": "External Remote Services",
+            "description": "Adversaries may leverage external remote services as a point of initial access into your network. These services allow users to connect to internal network resources from external locations. Examples are VPNs, Citrix, and other access mechanisms. Remote service gateways often manage connections and credential authentication for these services.",
+            "sub-techniques": []
+        },
+        {
+            "id": "T0883",
+            "name": "Internet Accessible Device",
+            "description": "Adversaries may gain access into industrial environments through systems exposed directly to the internet for remote access rather than through External Remote Services. Internet Accessible Devices are exposed to the internet unintentionally or intentionally without adequate protections. This may allow for adversaries to move directly into the control system network. Access onto these devices is accomplished without the use of exploits, these would be represented within the Exploit Public-Facing Application technique.",
+            "sub-techniques": []
+        },
+        {
+            "id": "T0886",
+            "name": "Remote Services",
+            "description": "Adversaries may leverage remote services to move between assets and network segments. These services are often used to allow operators to interact with systems remotely within the network, some examples are RDP, SMB, SSH, and other similar mechanisms.",
+            "sub-techniques": []
+        },
+        {
+            "id": "T0847",
+            "name": "Replication Through Removable Media",
+            "description": "Adversaries may move onto systems, such as those separated from the enterprise network, by copying malware to removable media which is inserted into the control systems environment. The adversary may rely on unknowing trusted third parties, such as suppliers or contractors with access privileges, to introduce the removable media. This technique enables initial access to target devices that never connect to untrusted networks, but are physically accessible.",
+            "sub-techniques": []
+        },
+        {
+            "id": "T0848",
+            "name": "Rogue Master",
+            "description": "Adversaries may setup a rogue master to leverage control server functions to communicate with outstations. A rogue master can be used to send legitimate control messages to other control system devices, affecting processes in unintended ways. It may also be used to disrupt network communications by capturing and receiving the network traffic meant for the actual master. Impersonating a master may also allow an adversary to avoid detection.",
+            "sub-techniques": []
+        },
+        {
+            "id": "T0865",
+            "name": "Spearphishing Attachment",
+            "description": "Adversaries may use a spearphishing attachment, a variant of spearphishing, as a form of a social engineering attack against specific targets. Spearphishing attachments are different from other forms of spearphishing in that they employ malware attached to an email. All forms of spearphishing are electronically delivered and target a specific individual, company, or industry. In this scenario, adversaries attach a file to the spearphishing email and usually rely upon User Execution to gain execution and access.",
+            "sub-techniques": []
+        },
+        {
+            "id": "T0862",
+            "name": "Supply Chain Compromise",
+            "description": "Adversaries may perform supply chain compromise to gain control systems environment access by means of infected products, software, and workflows. Supply chain compromise is the manipulation of products, such as devices or software, or their delivery mechanisms before receipt by the end consumer. Adversary compromise of these products and mechanisms is done for the goal of data or system compromise, once infected products are introduced to the target environment.",
+            "sub-techniques": []
+        },
+        {
+            "id": "T0864",
+            "name": "Transient Cyber Asset",
+            "description": "Adversaries may target devices that are transient across ICS networks and external networks. Normally, transient assets are brought into an environment by authorized personnel and do not remain in that environment on a permanent basis. Transient assets are commonly needed to support management functions and may be more common in systems where a remotely managed asset is not feasible, external connections for remote access do not exist, or 3rd party contractor/vendor access is required.",
+            "sub-techniques": []
+        },
+        {
+            "id": "T0860",
+            "name": "Wireless Compromise",
+            "description": "Adversaries may perform wireless compromise as a method of gaining communications and unauthorized access to a wireless network. Access to a wireless network may be gained through the compromise of a wireless device. Adversaries may also utilize radios and other wireless communication devices on the same frequency as the wireless network. Wireless compromise can be done as an initial access vector from a remote distance.",
+            "sub-techniques": []
+        }
+    ]
+}

@@ -1,0 +1,38 @@
+{
+    "id": "TA0029",
+    "name": "Privilege Escalation",
+    "description": "The adversary is trying to gain higher-level permissions.",
+    "techniques":
+    [
+        {
+            "id": "T1626",
+            "name": "Abuse Elevation Control Mechanism",
+            "description": "Adversaries may circumvent mechanisms designed to control elevated privileges to gain higher-level permissions. Most modern systems contain native elevation control mechanisms that are intended to limit privileges that a user can gain on a machine. Authorization has to be granted to specific users in order to perform tasks that are designated as higher risk. An adversary can use several methods to take advantage of built-in control mechanisms in order to escalate privileges on a system.",
+            "sub-techniques": [
+                {
+                    "id": "T1626.001",
+                    "name": "Device Administrator Permissions",
+                    "description": "Adversaries may abuse Android\u2019s device administration API to obtain a higher degree of control over the device. By abusing the API, adversaries can perform several nefarious actions, such as resetting the device\u2019s password for Endpoint Denial of Service, factory resetting the device for File Deletion and to delete any traces of the malware, disabling all the device\u2019s cameras, or to make it more difficult to uninstall the app."
+                }
+            ]
+        },
+        {
+            "id": "T1404",
+            "name": "Exploitation for Privilege Escalation",
+            "description": "Adversaries may exploit software vulnerabilities in order to to elevate privileges. Exploitation of a software vulnerability occurs when an adversary takes advantage of a programming error in an application, service, within the operating system software, or kernel itself to execute adversary-controlled code. Security constructions, such as permission levels, will often hinder access to information and use of certain techniques. Adversaries will likely need to perform privilege escalation to include use of software exploitation to circumvent those restrictions.",
+            "sub-techniques": []
+        },
+        {
+            "id": "T1631",
+            "name": "Process Injection",
+            "description": "Adversaries may inject code into processes in order to evade process-based defenses or even elevate privileges. Process injection is a method of executing arbitrary code in the address space of a separate live process. Running code in the context of another process may allow access to the process's memory, system/network resources, and possibly elevated privileges. Execution via process injection may also evade detection from security products since the execution is masked under a legitimate process.",
+            "sub-techniques": [
+                {
+                    "id": "T1631.001",
+                    "name": "Ptrace System Calls",
+                    "description": "Adversaries may inject malicious code into processes via ptrace (process trace) system calls in order to evade process-based defenses as well as possibly elevate privileges. Ptrace system call injection is a method of executing arbitrary code in the address space of a separate live process."
+                }
+            ]
+        }
+    ]
+}

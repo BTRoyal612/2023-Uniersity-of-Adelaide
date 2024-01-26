@@ -1,0 +1,170 @@
+{
+    "id": "TA0030",
+    "name": "Defense Evasion",
+    "description": "The adversary is trying to avoid being detected.",
+    "techniques":
+    [
+        {
+            "id": "T1407",
+            "name": "Download New Code at Runtime",
+            "description": "Adversaries may download and execute dynamic code not included in the original application package after installation. This technique is primarily used to evade static analysis checks and pre-publication scans in official app stores. In some cases, more advanced dynamic or behavioral analysis techniques could detect this behavior. However, in conjunction with Execution Guardrails techniques, detecting malicious code downloaded after installation could be difficult.",
+            "sub-techniques": []
+        },
+        {
+            "id": "T1627",
+            "name": "Execution Guardrails",
+            "description": "Adversaries may use execution guardrails to constrain execution or actions based on adversary supplied and environment specific conditions that are expected to be present on the target. Guardrails ensure that a payload only executes against an intended target and reduces collateral damage from an adversary\u2019s campaign. Values an adversary can provide about a target system or environment to use as guardrails may include environment information such as location.",
+            "sub-techniques": [
+                {
+                    "id": "T1627.001",
+                    "name": "Geofencing",
+                    "description": "Adversaries may use a device\u2019s geographical location to limit certain malicious behaviors. For example, malware operators may limit the distribution of a second stage payload to certain geographic regions."
+                }
+            ]
+        },
+        {
+            "id": "T1541",
+            "name": "Foreground Persistence",
+            "description": "Adversaries may abuse Android's startForeground() API method to maintain continuous sensor access. Beginning in Android 9, idle applications running in the background no longer have access to device sensors, such as the camera, microphone, and gyroscope. Applications can retain sensor access by running in the foreground, using Android\u2019s startForeground() API method. This informs the system that the user is actively interacting with the application, and it should not be killed. The only requirement to start a foreground service is showing a persistent notification to the user.",
+            "sub-techniques": []
+        },
+        {
+            "id": "T1628",
+            "name": "Hide Artifacts",
+            "description": "Adversaries may attempt to hide artifacts associated with their behaviors to evade detection. Mobile operating systems have features and developer APIs to hide various artifacts, such as an application\u2019s launcher icon. These APIs have legitimate usages, such as hiding an icon to avoid application drawer clutter when an application does not have a usable interface. Adversaries may abuse these features and APIs to hide artifacts from the user to evade detection.",
+            "sub-techniques": [
+                {
+                    "id": "T1628.001",
+                    "name": "Suppress Application Icon",
+                    "description": "A malicious application could suppress its icon from being displayed to the user in the application launcher. This hides the fact that it is installed, and can make it more difficult for the user to uninstall the application. Hiding the application's icon programmatically does not require any special permissions."
+                },
+                {
+                    "id": "T1628.002",
+                    "name": "User Evasion",
+                    "description": "Adversaries may attempt to avoid detection by hiding malicious behavior from the user. By doing this, an adversary\u2019s modifications would most likely remain installed on the device for longer, allowing the adversary to continue to operate on that device."
+                }
+            ]
+        },
+        {
+            "id": "T1617",
+            "name": "Hooking",
+            "description": "Adversaries may utilize hooking to hide the presence of artifacts associated with their behaviors to evade detection. Hooking can be used to modify return values or data structures of system APIs and function calls. This process typically involves using 3rd party root frameworks, such as Xposed or Magisk, with either a system exploit or pre-existing root access. By including custom modules for root frameworks, adversaries can hook system APIs and alter the return value and/or system data structures to alter functionality/visibility of various aspects of the system.",
+            "sub-techniques": []
+        },
+        {
+            "id": "T1629",
+            "name": "Impair Defenses",
+            "description": "Adversaries may maliciously modify components of a victim environment in order to hinder or disable defensive mechanisms. This not only involves impairing preventative defenses, such as anti-virus, but also detection capabilities that defenders can use to audit activity and identify malicious behavior. This may span both native defenses as well as supplemental capabilities installed by users or mobile endpoint administrators.",
+            "sub-techniques": [
+                {
+                    "id": "T1629.001",
+                    "name": "Prevent Application Removal",
+                    "description": "Adversaries may abuse the Android device administration API to prevent the user from uninstalling a target application. In earlier versions of Android, device administrator applications needed their administration capabilities explicitly deactivated by the user before the application could be uninstalled. This was later updated so the user could deactivate and uninstall the administrator application in one step."
+                },
+                {
+                    "id": "T1629.002",
+                    "name": "Device Lockout",
+                    "description": "An adversary may seek to inhibit user interaction by locking the legitimate user out of the device. This is typically accomplished by requesting device administrator permissions and then locking the screen using DevicePolicyManager.lockNow(). Other novel techniques for locking the user out of the device have been observed, such as showing a persistent overlay, using carefully crafted \"call\" notification screens, and locking HTML pages in the foreground. These techniques can be very difficult to get around, and typically require booting the device into safe mode to uninstall the malware."
+                },
+                {
+                    "id": "T1629.003",
+                    "name": "Disable or Modify Tools",
+                    "description": "Adversaries may disable security tools to avoid potential detection of their tools and activities. This can take the form of disabling security software, modifying SELinux configuration, or other methods to interfere with security tools scanning or reporting information. This is typically done by abusing device administrator permissions or using system exploits to gain root access to the device to modify protected system files."
+                }
+            ]
+        },
+        {
+            "id": "T1630",
+            "name": "Indicator Removal on Host",
+            "description": "Adversaries may delete, alter, or hide generated artifacts on a device, including files, jailbreak status, or the malicious application itself. These actions may interfere with event collection, reporting, or other notifications used to detect intrusion activity. This may compromise the integrity of mobile security solutions by causing notable events or information to go unreported.",
+            "sub-techniques": [
+                {
+                    "id": "T1630.001",
+                    "name": "Uninstall Malicious Application",
+                    "description": "Adversaries may include functionality in malware that uninstalls the malicious application from the device. This can be achieved by:"
+                },
+                {
+                    "id": "T1630.002",
+                    "name": "File Deletion",
+                    "description": "Adversaries may wipe a device or delete individual files in order to manipulate external outcomes or hide activity. An application must have administrator access to fully wipe the device, while individual files may not require special permissions to delete depending on their storage location."
+                },
+                {
+                    "id": "T1630.003",
+                    "name": "Disguise Root/Jailbreak Indicators",
+                    "description": "An adversary could use knowledge of the techniques used by security software to evade detection. For example, some mobile security products perform compromised device detection by searching for particular artifacts such as an installed \"su\" binary, but that check could be evaded by naming the binary something else. Similarly, polymorphic code techniques could be used to evade signature-based detection."
+                }
+            ]
+        },
+        {
+            "id": "T1516",
+            "name": "Input Injection",
+            "description": "A malicious application can inject input to the user interface to mimic user interaction through the abuse of Android's accessibility APIs.",
+            "sub-techniques": []
+        },
+        {
+            "id": "T1575",
+            "name": "Native API",
+            "description": "Adversaries may use Android\u2019s Native Development Kit (NDK) to write native functions that can achieve execution of binaries or functions. Like system calls on a traditional desktop operating system, native code achieves execution on a lower level than normal Android SDK calls.",
+            "sub-techniques": []
+        },
+        {
+            "id": "T1406",
+            "name": "Obfuscated Files or Information",
+            "description": "Adversaries may attempt to make a payload or file difficult to discover or analyze by encrypting, encoding, or otherwise obfuscating its contents on the device or in transit. This is common behavior that can be used across different platforms and the network to evade defenses.",
+            "sub-techniques": [
+                {
+                    "id": "T1406.001",
+                    "name": "Steganography",
+                    "description": "Adversaries may use steganography techniques in order to prevent the detection of hidden information. Steganographic techniques can be used to hide data in digital media such as images, audio tracks, video clips, or text files."
+                },
+                {
+                    "id": "T1406.002",
+                    "name": "Software Packing",
+                    "description": "Adversaries may perform software packing to conceal their code. Software packing is a method of compressing or encrypting an executable. Packing an executable changes the file signature in an attempt to avoid signature-based detection. Most decompression techniques decompress the executable code in memory."
+                }
+            ]
+        },
+        {
+            "id": "T1631",
+            "name": "Process Injection",
+            "description": "Adversaries may inject code into processes in order to evade process-based defenses or even elevate privileges. Process injection is a method of executing arbitrary code in the address space of a separate live process. Running code in the context of another process may allow access to the process's memory, system/network resources, and possibly elevated privileges. Execution via process injection may also evade detection from security products since the execution is masked under a legitimate process.",
+            "sub-techniques": [
+                {
+                    "id": "T1631.001",
+                    "name": "Ptrace System Calls",
+                    "description": "Adversaries may inject malicious code into processes via ptrace (process trace) system calls in order to evade process-based defenses as well as possibly elevate privileges. Ptrace system call injection is a method of executing arbitrary code in the address space of a separate live process."
+                }
+            ]
+        },
+        {
+            "id": "T1604",
+            "name": "Proxy Through Victim",
+            "description": "Adversaries may use a compromised device as a proxy server to the Internet. By utilizing a proxy, adversaries hide the true IP address of their C2 server and associated infrastructure from the destination of the network traffic. This masquerades an adversary\u2019s traffic as legitimate traffic originating from the compromised device, which can evade IP-based restrictions and alerts on certain services, such as bank accounts and social media websites.",
+            "sub-techniques": []
+        },
+        {
+            "id": "T1632",
+            "name": "Subvert Trust Controls",
+            "description": "Adversaries may undermine security controls that will either warn users of untrusted activity or prevent execution of untrusted applications. Operating systems and security products may contain mechanisms to identify programs or websites as possessing some level of trust. Examples of such features include: an app being allowed to run because it is signed by a valid code signing certificate; an OS prompt alerting the user that an app came from an untrusted source; or getting an indication that you are about to connect to an untrusted site. The method adversaries use will depend on the specific mechanism they seek to subvert.",
+            "sub-techniques": [
+                {
+                    "id": "T1632.001",
+                    "name": "Code Signing Policy Modification",
+                    "description": "Adversaries may modify code signing policies to enable execution of applications signed with unofficial or unknown keys. Code signing provides a level of authenticity on an app from a developer, guaranteeing that the program has not been tampered with and comes from an official source. Security controls can include enforcement mechanisms to ensure that only valid, signed code can be run on a device."
+                }
+            ]
+        },
+        {
+            "id": "T1633",
+            "name": "Virtualization/Sandbox Evasion",
+            "description": "Adversaries may employ various means to detect and avoid virtualization and analysis environments. This may include changing behaviors after checking for the presence of artifacts indicative of a virtual machine environment (VME) or sandbox. If the adversary detects a VME, they may alter their malware\u2019s behavior to disengage from the victim or conceal the core functions of the payload. They may also search for VME artifacts before dropping further payloads. Adversaries may use the information learned from Virtualization/Sandbox Evasion during automated discovery to shape follow-on behaviors.",
+            "sub-techniques": [
+                {
+                    "id": "T1633.001",
+                    "name": "System Checks",
+                    "description": "Adversaries may employ various system checks to detect and avoid virtualization and analysis environments. This may include changing behavior after checking for the presence of artifacts indicative of a virtual environment or sandbox. If the adversary detects a virtual environment, they may alter their malware\u2019s behavior to disengage from the victim or conceal the core functions of the implant. They may also search for virtualization artifacts before dropping secondary or additional payloads."
+                }
+            ]
+        }
+    ]
+}

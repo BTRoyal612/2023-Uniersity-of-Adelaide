@@ -1,0 +1,32 @@
+{
+    "id": "TA0041",
+    "name": "Execution",
+    "description": "The adversary is trying to run malicious code.",
+    "techniques":
+    [
+        {
+            "id": "T1623",
+            "name": "Command and Scripting Interpreter",
+            "description": "Adversaries may abuse command and script interpreters to execute commands, scripts, or binaries. These interfaces and languages provide ways of interacting with computer systems and are a common feature across many different platforms. Most systems come with some built-in command-line interface and scripting capabilities, for example, Android is a UNIX-like OS and includes a basic Unix Shell that can be accessed via the Android Debug Bridge (ADB) or Java\u2019s Runtime package.",
+            "sub-techniques": [
+                {
+                    "id": "T1623.001",
+                    "name": "Unix Shell",
+                    "description": "Adversaries may abuse Unix shell commands and scripts for execution. Unix shells are the underlying command prompts on Android and iOS devices. Unix shells can control every aspect of a system, with certain commands requiring elevated privileges that are only accessible if the device has been rooted or jailbroken."
+                }
+            ]
+        },
+        {
+            "id": "T1575",
+            "name": "Native API",
+            "description": "Adversaries may use Android\u2019s Native Development Kit (NDK) to write native functions that can achieve execution of binaries or functions. Like system calls on a traditional desktop operating system, native code achieves execution on a lower level than normal Android SDK calls.",
+            "sub-techniques": []
+        },
+        {
+            "id": "T1603",
+            "name": "Scheduled Task/Job",
+            "description": "Adversaries may abuse task scheduling functionality to facilitate initial or recurring execution of malicious code. On Android and iOS, APIs and libraries exist to facilitate scheduling tasks to execute at a specified date, time, or interval.",
+            "sub-techniques": []
+        }
+    ]
+}

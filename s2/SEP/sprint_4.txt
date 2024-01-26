@@ -1,0 +1,25 @@
+What went well in the sprint?
+
+Revisited MITRE's sample attackflows, highlighting a balance between understanding foundational concepts and software execution.
+Developed the graph visualization page based on prior research, demonstrating a proactive and forward-thinking approach.
+Enhanced admin functions and backend routes, emphasizing both functionality and user experience.
+Successfully refined and implemented features such as annotation and collaboration, showcasing technical skill and dedication.
+Addressed and resolved technical challenges, including the notable bug fix related to the schema foreign key.
+Demonstrated adaptability by strategically choosing to refine existing features in the face of end-of-semester pressures, prioritizing quality over quantity.
+
+What could be improved?
+
+Better alignment with client expectations to avoid omissions that affect project trajectory and team morale.
+While technical advancements like graph visualization are crucial, they should be balanced with client priorities.
+Strides made in areas like the annotation side menu and bug fixes need to align with client-preferred functionalities to prevent disparities.
+Address the challenge of team members juggling academic demands and project commitments to ensure consistent project progression.
+Improve time management and prioritize functionalities, as seen with delays in incident report annotation.
+Enhance communication within the team and with the client to harmonize technical and process efficiency with broader goals.
+
+What will the group commit to improve in the next sprint?
+
+Prioritize efficient rollout of the annotation tool to align with user and client expectations.
+Introduce structured daily stand-ups for better team alignment, progress monitoring, and swift issue resolution.
+Establish weekly feedback sessions to strengthen team unity and address concerns collaboratively.
+As project presentation nears, focus on refining and finalizing existing features for a compelling client showcase.
+Balance between enhancing technical aspects of the software and refining the software development process to remain agile and client-centric.

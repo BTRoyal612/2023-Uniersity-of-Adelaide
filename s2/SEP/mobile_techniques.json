@@ -1,0 +1,537 @@
+[
+    {
+        "id": "T1626",
+        "name": "Abuse Elevation Control Mechanism",
+        "description": "Adversaries may circumvent mechanisms designed to control elevated privileges to gain higher-level permissions. Most modern systems contain native elevation control mechanisms that are intended to limit privileges that a user can gain on a machine. Authorization has to be granted to specific users in order to perform tasks that are designated as higher risk. An adversary can use several methods to take advantage of built-in control mechanisms in order to escalate privileges on a system."
+    },
+    {
+        "id": "T1626.001",
+        "name": "Device Administrator Permissions",
+        "description": "Adversaries may abuse Android\u2019s device administration API to obtain a higher degree of control over the device. By abusing the API, adversaries can perform several nefarious actions, such as resetting the device\u2019s password for Endpoint Denial of Service, factory resetting the device for File Deletion and to delete any traces of the malware, disabling all the device\u2019s cameras, or to make it more difficult to uninstall the app."
+    },
+    {
+        "id": "T1517",
+        "name": "Access Notifications",
+        "description": "Adversaries may collect data within notifications sent by the operating system or other applications. Notifications may contain sensitive data such as one-time authentication codes sent over SMS, email, or other mediums. In the case of Credential Access, adversaries may attempt to intercept one-time code sent to the device. Adversaries can also dismiss notifications to prevent the user from noticing that the notification has arrived and can trigger action buttons contained within notifications."
+    },
+    {
+        "id": "T1640",
+        "name": "Account Access Removal",
+        "description": "Adversaries may interrupt availability of system and network resources by inhibiting access to accounts utilized by legitimate users. Accounts may be deleted, locked, or manipulated (ex: credentials changed) to remove access to accounts."
+    },
+    {
+        "id": "T1638",
+        "name": "Adversary-in-the-Middle",
+        "description": "Adversaries may attempt to position themselves between two or more networked devices to support follow-on behaviors such as Transmitted Data Manipulation or Endpoint Denial of Service."
+    },
+    {
+        "id": "T1437",
+        "name": "Application Layer Protocol",
+        "description": "Adversaries may communicate using application layer protocols to avoid detection/network filtering by blending in with existing traffic. Commands to the mobile device, and often the results of those commands, will be embedded within the protocol traffic between the mobile device and server."
+    },
+    {
+        "id": "T1437.001",
+        "name": "Web Protocols",
+        "description": "Adversaries may communicate using application layer protocols associated with web protocols traffic to avoid detection/network filtering by blending in with existing traffic. Commands to remote mobile devices, and often the results of those commands, will be embedded within the protocol traffic between the mobile client and server."
+    },
+    {
+        "id": "T1532",
+        "name": "Archive Collected Data",
+        "description": "Adversaries may compress and/or encrypt data that is collected prior to exfiltration. Compressing data can help to obfuscate its contents and minimize use of network resources. Encryption can be used to hide information that is being exfiltrated from detection or make exfiltration less conspicuous upon inspection by a defender."
+    },
+    {
+        "id": "T1429",
+        "name": "Audio Capture",
+        "description": "Adversaries may capture audio to collect information by leveraging standard operating system APIs of a mobile device. Examples of audio information adversaries may target include user conversations, surroundings, phone calls, or other sensitive information."
+    },
+    {
+        "id": "T1398",
+        "name": "Boot or Logon Initialization Scripts",
+        "description": "Adversaries may use scripts automatically executed at boot or logon initialization to establish persistence. Initialization scripts are part of the underlying operating system and are not accessible to the user unless the device has been rooted or jailbroken."
+    },
+    {
+        "id": "T1616",
+        "name": "Call Control",
+        "description": "Adversaries may make, forward, or block phone calls without user authorization. This could be used for adversary goals such as audio surveillance, blocking or forwarding calls from the device owner, or C2 communication."
+    },
+    {
+        "id": "T1414",
+        "name": "Clipboard Data",
+        "description": "Adversaries may abuse clipboard manager APIs to obtain sensitive information copied to the device clipboard. For example, passwords being copied and pasted from a password manager application could be captured by a malicious application installed on the device."
+    },
+    {
+        "id": "T1623",
+        "name": "Command and Scripting Interpreter",
+        "description": "Adversaries may abuse command and script interpreters to execute commands, scripts, or binaries. These interfaces and languages provide ways of interacting with computer systems and are a common feature across many different platforms. Most systems come with some built-in command-line interface and scripting capabilities, for example, Android is a UNIX-like OS and includes a basic Unix Shell that can be accessed via the Android Debug Bridge (ADB) or Java\u2019s Runtime package."
+    },
+    {
+        "id": "T1623.001",
+        "name": "Unix Shell",
+        "description": "Adversaries may abuse Unix shell commands and scripts for execution. Unix shells are the underlying command prompts on Android and iOS devices. Unix shells can control every aspect of a system, with certain commands requiring elevated privileges that are only accessible if the device has been rooted or jailbroken."
+    },
+    {
+        "id": "T1577",
+        "name": "Compromise Application Executable",
+        "description": "Adversaries may modify applications installed on a device to establish persistent access to a victim. These malicious modifications can be used to make legitimate applications carry out adversary tasks when these applications are in use."
+    },
+    {
+        "id": "T1645",
+        "name": "Compromise Client Software Binary",
+        "description": "Adversaries may modify system software binaries to establish persistent access to devices. System software binaries are used by the underlying operating system and users over adb or terminal emulators."
+    },
+    {
+        "id": "T1634",
+        "name": "Credentials from Password Store",
+        "description": "Adversaries may search common password storage locations to obtain user credentials. Passwords can be stored in several places on a device, depending on the operating system or application holding the credentials. There are also specific applications that store passwords to make it easier for users manage and maintain. Once credentials are obtained, they can be used to perform lateral movement and access restricted information."
+    },
+    {
+        "id": "T1634.001",
+        "name": "Keychain",
+        "description": "Adversaries may collect keychain data from an iOS device to acquire credentials. Keychains are the built-in way for iOS to keep track of users' passwords and credentials for many services and features such as Wi-Fi passwords, websites, secure notes, certificates, private keys, and VPN credentials."
+    },
+    {
+        "id": "T1471",
+        "name": "Data Encrypted for Impact",
+        "description": "An adversary may encrypt files stored on a mobile device to prevent the user from accessing them. This may be done in order to extract monetary compensation from a victim in exchange for decryption or a decryption key (ransomware) or to render data permanently inaccessible in cases where the key is not saved or transmitted."
+    },
+    {
+        "id": "T1533",
+        "name": "Data from Local System",
+        "description": "Adversaries may search local system sources, such as file systems or local databases, to find files of interest and sensitive data prior to exfiltration."
+    },
+    {
+        "id": "T1641",
+        "name": "Data Manipulation",
+        "description": "Adversaries may insert, delete, or alter data in order to manipulate external outcomes or hide activity. By manipulating data, adversaries may attempt to affect a business process, organizational understanding, or decision making."
+    },
+    {
+        "id": "T1641.001",
+        "name": "Transmitted Data Manipulation",
+        "description": "Adversaries may alter data en route to storage or other systems in order to manipulate external outcomes or hide activity. By manipulating transmitted data, adversaries may attempt to affect a business process, organizational understanding, or decision making."
+    },
+    {
+        "id": "T1407",
+        "name": "Download New Code at Runtime",
+        "description": "Adversaries may download and execute dynamic code not included in the original application package after installation. This technique is primarily used to evade static analysis checks and pre-publication scans in official app stores. In some cases, more advanced dynamic or behavioral analysis techniques could detect this behavior. However, in conjunction with Execution Guardrails techniques, detecting malicious code downloaded after installation could be difficult."
+    },
+    {
+        "id": "T1456",
+        "name": "Drive-By Compromise",
+        "description": "Adversaries may gain access to a system through a user visiting a website over the normal course of browsing. With this technique, the user's web browser is typically targeted for exploitation, but adversaries may also use compromised websites for non-exploitation behavior such as acquiring an Application Access Token."
+    },
+    {
+        "id": "T1637",
+        "name": "Dynamic Resolution",
+        "description": "Adversaries may dynamically establish connections to command and control infrastructure to evade common detections and remediations. This may be achieved by using malware that shares a common algorithm with the infrastructure the adversary uses to receive the malware's communications. This algorithm can be used to dynamically adjust parameters such as the domain name, IP address, or port number the malware uses for command and control."
+    },
+    {
+        "id": "T1637.001",
+        "name": "Domain Generation Algorithms",
+        "description": "Adversaries may use Domain Generation Algorithms (DGAs) to procedurally generate domain names for uses such as command and control communication or malicious application distribution."
+    },
+    {
+        "id": "T1521",
+        "name": "Encrypted Channel",
+        "description": "Adversaries may explicitly employ a known encryption algorithm to conceal command and control traffic rather than relying on any inherent protections provided by a communication protocol. Despite the use of a secure algorithm, these implementations may be vulnerable to reverse engineering if necessary secret keys are encoded and/or generated within malware samples/configuration files."
+    },
+    {
+        "id": "T1521.001",
+        "name": "Symmetric Cryptography",
+        "description": "Adversaries may employ a known symmetric encryption algorithm to conceal command and control traffic, rather than relying on any inherent protections provided by a communication protocol. Symmetric encryption algorithms use the same key for plaintext encryption and ciphertext decryption. Common symmetric encryption algorithms include AES, Blowfish, and RC4."
+    },
+    {
+        "id": "T1521.002",
+        "name": "Asymmetric Cryptography",
+        "description": "Adversaries may employ a known asymmetric encryption algorithm to conceal command and control traffic, rather than relying on any inherent protections provided by a communication protocol. Asymmetric cryptography, also known as public key cryptography, uses a keypair per party: one public that can be freely distributed, and one private that should not be distributed. Due to how asymmetric algorithms work, the sender encrypts data with the receiver\u2019s public key and the receiver decrypts the data with their private key. This ensures that only the intended recipient can read the encrypted data. Common public key encryption algorithms include RSA, ElGamal, and ECDSA."
+    },
+    {
+        "id": "T1642",
+        "name": "Endpoint Denial of Service",
+        "description": "Adversaries may perform Endpoint Denial of Service (DoS) attacks to degrade or block the availability of services to users."
+    },
+    {
+        "id": "T1624",
+        "name": "Event Triggered Execution",
+        "description": "Adversaries may establish persistence using system mechanisms that trigger execution based on specific events. Mobile operating systems have means to subscribe to events such as receiving an SMS message, device boot completion, or other device activities."
+    },
+    {
+        "id": "T1624.001",
+        "name": "Broadcast Receivers",
+        "description": "Adversaries may establish persistence using system mechanisms that trigger execution based on specific events. Mobile operating systems have means to subscribe to events such as receiving an SMS message, device boot completion, or other device activities."
+    },
+    {
+        "id": "T1627",
+        "name": "Execution Guardrails",
+        "description": "Adversaries may use execution guardrails to constrain execution or actions based on adversary supplied and environment specific conditions that are expected to be present on the target. Guardrails ensure that a payload only executes against an intended target and reduces collateral damage from an adversary\u2019s campaign. Values an adversary can provide about a target system or environment to use as guardrails may include environment information such as location."
+    },
+    {
+        "id": "T1627.001",
+        "name": "Geofencing",
+        "description": "Adversaries may use a device\u2019s geographical location to limit certain malicious behaviors. For example, malware operators may limit the distribution of a second stage payload to certain geographic regions."
+    },
+    {
+        "id": "T1639",
+        "name": "Exfiltration Over Alternative Protocol",
+        "description": "Adversaries may steal data by exfiltrating it over a different protocol than that of the existing command and control channel. The data may also be sent to an alternate network location from the main command and control server."
+    },
+    {
+        "id": "T1639.001",
+        "name": "Exfiltration Over Unencrypted Non-C2 Protocol",
+        "description": "Adversaries may steal data by exfiltrating it over an un-encrypted network protocol other than that of the existing command and control channel. The data may also be sent to an alternate network location from the main command and control server."
+    },
+    {
+        "id": "T1646",
+        "name": "Exfiltration Over C2 Channel",
+        "description": "Adversaries may steal data by exfiltrating it over an existing command and control channel. Stolen data is encoded into the normal communications channel using the same protocol as command and control communications."
+    },
+    {
+        "id": "T1404",
+        "name": "Exploitation for Privilege Escalation",
+        "description": "Adversaries may exploit software vulnerabilities in order to to elevate privileges. Exploitation of a software vulnerability occurs when an adversary takes advantage of a programming error in an application, service, within the operating system software, or kernel itself to execute adversary-controlled code. Security constructions, such as permission levels, will often hinder access to information and use of certain techniques. Adversaries will likely need to perform privilege escalation to include use of software exploitation to circumvent those restrictions."
+    },
+    {
+        "id": "T1428",
+        "name": "Exploitation of Remote Services",
+        "description": "Adversaries may exploit remote services of enterprise servers, workstations, or other resources to gain unauthorized access to internal systems once inside of a network. Adversaries may exploit remote services by taking advantage of a mobile device\u2019s access to an internal enterprise network through local connectivity or through a Virtual Private Network (VPN). Exploitation of a software vulnerability occurs when an adversary takes advantage of a programming error in a program, service, or within the operating system software or kernel itself to execute adversary-controlled code. A common goal for post-compromise exploitation of remote services is for lateral movement to enable access to a remote system."
+    },
+    {
+        "id": "T1420",
+        "name": "File and Directory Discovery",
+        "description": "Adversaries may enumerate files and directories or search in specific device locations for desired information within a filesystem. Adversaries may use the information from File and Directory Discovery during automated discovery to shape follow-on behaviors, including deciding if the adversary should fully infect the target and/or attempt specific actions."
+    },
+    {
+        "id": "T1541",
+        "name": "Foreground Persistence",
+        "description": "Adversaries may abuse Android's startForeground() API method to maintain continuous sensor access. Beginning in Android 9, idle applications running in the background no longer have access to device sensors, such as the camera, microphone, and gyroscope. Applications can retain sensor access by running in the foreground, using Android\u2019s startForeground() API method. This informs the system that the user is actively interacting with the application, and it should not be killed. The only requirement to start a foreground service is showing a persistent notification to the user."
+    },
+    {
+        "id": "T1643",
+        "name": "Generate Traffic from Victim",
+        "description": "Adversaries may generate outbound traffic from devices. This is typically performed to manipulate external outcomes, such as to achieve carrier billing fraud or to manipulate app store rankings or ratings. Outbound traffic is typically generated as SMS messages or general web traffic, but may take other forms as well."
+    },
+    {
+        "id": "T1628",
+        "name": "Hide Artifacts",
+        "description": "Adversaries may attempt to hide artifacts associated with their behaviors to evade detection. Mobile operating systems have features and developer APIs to hide various artifacts, such as an application\u2019s launcher icon. These APIs have legitimate usages, such as hiding an icon to avoid application drawer clutter when an application does not have a usable interface. Adversaries may abuse these features and APIs to hide artifacts from the user to evade detection."
+    },
+    {
+        "id": "T1628.001",
+        "name": "Suppress Application Icon",
+        "description": "A malicious application could suppress its icon from being displayed to the user in the application launcher. This hides the fact that it is installed, and can make it more difficult for the user to uninstall the application. Hiding the application's icon programmatically does not require any special permissions."
+    },
+    {
+        "id": "T1628.002",
+        "name": "User Evasion",
+        "description": "Adversaries may attempt to avoid detection by hiding malicious behavior from the user. By doing this, an adversary\u2019s modifications would most likely remain installed on the device for longer, allowing the adversary to continue to operate on that device."
+    },
+    {
+        "id": "T1625",
+        "name": "Hijack Execution Flow",
+        "description": "Adversaries may execute their own malicious payloads by hijacking the way operating systems run applications. Hijacking execution flow can be for the purposes of persistence since this hijacked execution may reoccur over time."
+    },
+    {
+        "id": "T1625.001",
+        "name": "System Runtime API Hijacking",
+        "description": "Adversaries may execute their own malicious payloads by hijacking the way an operating system run applications. Hijacking execution flow can be for the purposes of persistence since this hijacked execution may reoccur at later points in time."
+    },
+    {
+        "id": "T1617",
+        "name": "Hooking",
+        "description": "Adversaries may utilize hooking to hide the presence of artifacts associated with their behaviors to evade detection. Hooking can be used to modify return values or data structures of system APIs and function calls. This process typically involves using 3rd party root frameworks, such as Xposed or Magisk, with either a system exploit or pre-existing root access. By including custom modules for root frameworks, adversaries can hook system APIs and alter the return value and/or system data structures to alter functionality/visibility of various aspects of the system."
+    },
+    {
+        "id": "T1629",
+        "name": "Impair Defenses",
+        "description": "Adversaries may maliciously modify components of a victim environment in order to hinder or disable defensive mechanisms. This not only involves impairing preventative defenses, such as anti-virus, but also detection capabilities that defenders can use to audit activity and identify malicious behavior. This may span both native defenses as well as supplemental capabilities installed by users or mobile endpoint administrators."
+    },
+    {
+        "id": "T1629.001",
+        "name": "Prevent Application Removal",
+        "description": "Adversaries may abuse the Android device administration API to prevent the user from uninstalling a target application. In earlier versions of Android, device administrator applications needed their administration capabilities explicitly deactivated by the user before the application could be uninstalled. This was later updated so the user could deactivate and uninstall the administrator application in one step."
+    },
+    {
+        "id": "T1629.002",
+        "name": "Device Lockout",
+        "description": "An adversary may seek to inhibit user interaction by locking the legitimate user out of the device. This is typically accomplished by requesting device administrator permissions and then locking the screen using DevicePolicyManager.lockNow(). Other novel techniques for locking the user out of the device have been observed, such as showing a persistent overlay, using carefully crafted \"call\" notification screens, and locking HTML pages in the foreground. These techniques can be very difficult to get around, and typically require booting the device into safe mode to uninstall the malware."
+    },
+    {
+        "id": "T1629.003",
+        "name": "Disable or Modify Tools",
+        "description": "Adversaries may disable security tools to avoid potential detection of their tools and activities. This can take the form of disabling security software, modifying SELinux configuration, or other methods to interfere with security tools scanning or reporting information. This is typically done by abusing device administrator permissions or using system exploits to gain root access to the device to modify protected system files."
+    },
+    {
+        "id": "T1630",
+        "name": "Indicator Removal on Host",
+        "description": "Adversaries may delete, alter, or hide generated artifacts on a device, including files, jailbreak status, or the malicious application itself. These actions may interfere with event collection, reporting, or other notifications used to detect intrusion activity. This may compromise the integrity of mobile security solutions by causing notable events or information to go unreported."
+    },
+    {
+        "id": "T1630.001",
+        "name": "Uninstall Malicious Application",
+        "description": "Adversaries may include functionality in malware that uninstalls the malicious application from the device. This can be achieved by:"
+    },
+    {
+        "id": "T1630.002",
+        "name": "File Deletion",
+        "description": "Adversaries may wipe a device or delete individual files in order to manipulate external outcomes or hide activity. An application must have administrator access to fully wipe the device, while individual files may not require special permissions to delete depending on their storage location."
+    },
+    {
+        "id": "T1630.003",
+        "name": "Disguise Root/Jailbreak Indicators",
+        "description": "An adversary could use knowledge of the techniques used by security software to evade detection. For example, some mobile security products perform compromised device detection by searching for particular artifacts such as an installed \"su\" binary, but that check could be evaded by naming the binary something else. Similarly, polymorphic code techniques could be used to evade signature-based detection."
+    },
+    {
+        "id": "T1544",
+        "name": "Ingress Tool Transfer",
+        "description": "Adversaries may transfer tools or other files from an external system onto a compromised device to facilitate follow-on actions. Files may be copied from an external adversary-controlled system through the command and control channel or through alternate protocols with another tool such as FTP."
+    },
+    {
+        "id": "T1417",
+        "name": "Input Capture",
+        "description": "Adversaries may use methods of capturing user input to obtain credentials or collect information. During normal device usage, users often provide credentials to various locations, such as login pages/portals or system dialog boxes. Input capture mechanisms may be transparent to the user (e.g. Keylogging) or rely on deceiving the user into providing input into what they believe to be a genuine application prompt (e.g. GUI Input Capture)."
+    },
+    {
+        "id": "T1417.001",
+        "name": "Keylogging",
+        "description": "Adversaries may log user keystrokes to intercept credentials or other information from the user as the user types them."
+    },
+    {
+        "id": "T1417.002",
+        "name": "GUI Input Capture",
+        "description": "Adversaries may mimic common operating system GUI components to prompt users for sensitive information with a seemingly legitimate prompt. The operating system and installed applications often have legitimate needs to prompt the user for sensitive information such as account credentials, bank account information, or Personally Identifiable Information (PII). Compared to traditional PCs, the constrained display size of mobile devices may impair the ability to provide users with contextual information, making users more susceptible to this technique\u2019s use."
+    },
+    {
+        "id": "T1516",
+        "name": "Input Injection",
+        "description": "A malicious application can inject input to the user interface to mimic user interaction through the abuse of Android's accessibility APIs."
+    },
+    {
+        "id": "T1430",
+        "name": "Location Tracking",
+        "description": "Adversaries may track a device\u2019s physical location through use of standard operating system APIs via malicious or exploited applications on the compromised device."
+    },
+    {
+        "id": "T1430.001",
+        "name": "Remote Device Management Services",
+        "description": "An adversary may use access to cloud services (e.g. Google's Android Device Manager or Apple iCloud's Find my iPhone) or to an enterprise mobility management (EMM)/mobile device management (MDM) server console to track the location of mobile devices managed by the service."
+    },
+    {
+        "id": "T1430.002",
+        "name": "Impersonate SS7 Nodes",
+        "description": "Adversaries may exploit the lack of authentication in signaling system network nodes to track the to track the location of mobile devices by impersonating a node."
+    },
+    {
+        "id": "T1461",
+        "name": "Lockscreen Bypass",
+        "description": "An adversary with physical access to a mobile device may seek to bypass the device\u2019s lockscreen. Several methods exist to accomplish this, including:"
+    },
+    {
+        "id": "T1575",
+        "name": "Native API",
+        "description": "Adversaries may use Android\u2019s Native Development Kit (NDK) to write native functions that can achieve execution of binaries or functions. Like system calls on a traditional desktop operating system, native code achieves execution on a lower level than normal Android SDK calls."
+    },
+    {
+        "id": "T1464",
+        "name": "Network Denial of Service",
+        "description": "Adversaries may perform Network Denial of Service (DoS) attacks to degrade or block the availability of targeted resources to users. Network DoS can be performed by exhausting the network bandwidth that services rely on, or by jamming the signal going to or coming from devices."
+    },
+    {
+        "id": "T1423",
+        "name": "Network Service Scanning",
+        "description": "Adversaries may attempt to get a listing of services running on remote hosts, including those that may be vulnerable to remote software exploitation. Methods to acquire this information include port scans and vulnerability scans from the mobile device. This technique may take advantage of the mobile device's access to an internal enterprise network either through local connectivity or through a Virtual Private Network (VPN)."
+    },
+    {
+        "id": "T1509",
+        "name": "Non-Standard Port",
+        "description": "Adversaries may generate network traffic using a protocol and port paring that are typically not associated. For example, HTTPS over port 8088 or port 587 as opposed to the traditional port 443. Adversaries may make changes to the standard port used by a protocol to bypass filtering or muddle analysis/parsing of network data."
+    },
+    {
+        "id": "T1406",
+        "name": "Obfuscated Files or Information",
+        "description": "Adversaries may attempt to make a payload or file difficult to discover or analyze by encrypting, encoding, or otherwise obfuscating its contents on the device or in transit. This is common behavior that can be used across different platforms and the network to evade defenses."
+    },
+    {
+        "id": "T1406.001",
+        "name": "Steganography",
+        "description": "Adversaries may use steganography techniques in order to prevent the detection of hidden information. Steganographic techniques can be used to hide data in digital media such as images, audio tracks, video clips, or text files."
+    },
+    {
+        "id": "T1406.002",
+        "name": "Software Packing",
+        "description": "Adversaries may perform software packing to conceal their code. Software packing is a method of compressing or encrypting an executable. Packing an executable changes the file signature in an attempt to avoid signature-based detection. Most decompression techniques decompress the executable code in memory."
+    },
+    {
+        "id": "T1644",
+        "name": "Out of Band Data",
+        "description": "Adversaries may communicate with compromised devices using out of band data streams. This could be done for a variety of reasons, including evading network traffic monitoring, as a backup method of command and control, or for data exfiltration if the device is not connected to any Internet-providing networks (i.e. cellular or Wi-Fi). Several out of band data streams exist, such as SMS messages, NFC, and Bluetooth."
+    },
+    {
+        "id": "T1424",
+        "name": "Process Discovery",
+        "description": "Adversaries may attempt to get information about running processes on a device. Information obtained could be used to gain an understanding of common software/applications running on devices within a network. Adversaries may use the information from Process Discovery during automated discovery to shape follow-on behaviors, including whether or not the adversary fully infects the target and/or attempts specific actions."
+    },
+    {
+        "id": "T1631",
+        "name": "Process Injection",
+        "description": "Adversaries may inject code into processes in order to evade process-based defenses or even elevate privileges. Process injection is a method of executing arbitrary code in the address space of a separate live process. Running code in the context of another process may allow access to the process's memory, system/network resources, and possibly elevated privileges. Execution via process injection may also evade detection from security products since the execution is masked under a legitimate process."
+    },
+    {
+        "id": "T1631.001",
+        "name": "Ptrace System Calls",
+        "description": "Adversaries may inject malicious code into processes via ptrace (process trace) system calls in order to evade process-based defenses as well as possibly elevate privileges. Ptrace system call injection is a method of executing arbitrary code in the address space of a separate live process."
+    },
+    {
+        "id": "T1636",
+        "name": "Protected User Data",
+        "description": "Adversaries may utilize standard operating system APIs to collect data from permission-backed data stores on a device, such as the calendar or contact list. These permissions need to be declared ahead of time. On Android, they must be included in the application\u2019s manifest. On iOS, they must be included in the application\u2019s Info.plist file."
+    },
+    {
+        "id": "T1636.001",
+        "name": "Calendar Entries",
+        "description": "Adversaries may utilize standard operating system APIs to gather calendar entry data. On Android, this can be accomplished using the Calendar Content Provider. On iOS, this can be accomplished using the EventKit framework."
+    },
+    {
+        "id": "T1636.002",
+        "name": "Call Log",
+        "description": "Adversaries may utilize standard operating system APIs to gather call log data. On Android, this can be accomplished using the Call Log Content Provider. iOS provides no standard API to access the call log."
+    },
+    {
+        "id": "T1636.003",
+        "name": "Contact List",
+        "description": "Adversaries may utilize standard operating system APIs to gather contact list data. On Android, this can be accomplished using the Contacts Content Provider. On iOS, this can be accomplished using the Contacts framework."
+    },
+    {
+        "id": "T1636.004",
+        "name": "SMS Messages",
+        "description": "Adversaries may utilize standard operating system APIs to gather SMS messages. On Android, this can be accomplished using the SMS Content Provider. iOS provides no standard API to access SMS messages."
+    },
+    {
+        "id": "T1604",
+        "name": "Proxy Through Victim",
+        "description": "Adversaries may use a compromised device as a proxy server to the Internet. By utilizing a proxy, adversaries hide the true IP address of their C2 server and associated infrastructure from the destination of the network traffic. This masquerades an adversary\u2019s traffic as legitimate traffic originating from the compromised device, which can evade IP-based restrictions and alerts on certain services, such as bank accounts and social media websites."
+    },
+    {
+        "id": "T1458",
+        "name": "Replication Through Removable Media",
+        "description": "Adversaries may move onto devices by exploiting or copying malware to devices connected via USB. In the case of Lateral Movement, adversaries may utilize the physical connection of a device to a compromised or malicious charging station or PC to bypass application store requirements and install malicious applications directly. In the case of Initial Access, adversaries may attempt to exploit the device via the connection to gain access to data stored on the device. Examples of this include:"
+    },
+    {
+        "id": "T1603",
+        "name": "Scheduled Task/Job",
+        "description": "Adversaries may abuse task scheduling functionality to facilitate initial or recurring execution of malicious code. On Android and iOS, APIs and libraries exist to facilitate scheduling tasks to execute at a specified date, time, or interval."
+    },
+    {
+        "id": "T1513",
+        "name": "Screen Capture",
+        "description": "Adversaries may use screen capture to collect additional information about a target device, such as applications running in the foreground, user data, credentials, or other sensitive information. Applications running in the background can capture screenshots or videos of another application running in the foreground by using the Android MediaProjectionManager (generally requires the device user to grant consent). Background applications can also use Android accessibility services to capture screen contents being displayed by a foreground application. An adversary with root access or Android Debug Bridge (adb) access could call the Android screencap or screenrecord commands."
+    },
+    {
+        "id": "T1582",
+        "name": "SMS Control",
+        "description": "Adversaries may delete, alter, or send SMS messages without user authorization. This could be used to hide C2 SMS messages, spread malware, or various external effects."
+    },
+    {
+        "id": "T1418",
+        "name": "Software Discovery",
+        "description": "Adversaries may attempt to get a listing of applications that are installed on a device. Adversaries may use the information from Software Discovery during automated discovery to shape follow-on behaviors, including whether or not to fully infect the target and/or attempts specific actions."
+    },
+    {
+        "id": "T1418.001",
+        "name": "Security Software Discovery",
+        "description": "Adversaries may attempt to get a listing of security applications and configurations that are installed on a device. This may include things such as mobile security products. Adversaries may use the information from Security Software Discovery during automated discovery to shape follow-on behaviors, including whether or not to fully infect the target and/or attempt specific actions."
+    },
+    {
+        "id": "T1635",
+        "name": "Steal Application Access Token",
+        "description": "Adversaries can steal user application access tokens as a means of acquiring credentials to access remote systems and resources. This can occur through social engineering or URI hijacking and typically requires user action to grant access, such as through a system \"Open With\" dialogue."
+    },
+    {
+        "id": "T1635.001",
+        "name": "URI Hijacking",
+        "description": "Adversaries may register Uniform Resource Identifiers (URIs) to intercept sensitive data."
+    },
+    {
+        "id": "T1409",
+        "name": "Stored Application Data",
+        "description": "Adversaries may try to access and collect application data resident on the device. Adversaries often target popular applications, such as Facebook, WeChat, and Gmail."
+    },
+    {
+        "id": "T1632",
+        "name": "Subvert Trust Controls",
+        "description": "Adversaries may undermine security controls that will either warn users of untrusted activity or prevent execution of untrusted applications. Operating systems and security products may contain mechanisms to identify programs or websites as possessing some level of trust. Examples of such features include: an app being allowed to run because it is signed by a valid code signing certificate; an OS prompt alerting the user that an app came from an untrusted source; or getting an indication that you are about to connect to an untrusted site. The method adversaries use will depend on the specific mechanism they seek to subvert."
+    },
+    {
+        "id": "T1632.001",
+        "name": "Code Signing Policy Modification",
+        "description": "Adversaries may modify code signing policies to enable execution of applications signed with unofficial or unknown keys. Code signing provides a level of authenticity on an app from a developer, guaranteeing that the program has not been tampered with and comes from an official source. Security controls can include enforcement mechanisms to ensure that only valid, signed code can be run on a device."
+    },
+    {
+        "id": "T1474",
+        "name": "Supply Chain Compromise",
+        "description": "Adversaries may manipulate products or product delivery mechanisms prior to receipt by a final consumer for the purpose of data or system compromise."
+    },
+    {
+        "id": "T1474.001",
+        "name": "Compromise Software Dependencies and Development Tools",
+        "description": "Adversaries may manipulate products or product delivery mechanisms prior to receipt by a final consumer for the purpose of data or system compromise. Applications often depend on external software to function properly. Popular open source projects that are used as dependencies in many applications may be targeted as a means to add malicious code to users of the dependency."
+    },
+    {
+        "id": "T1474.002",
+        "name": "Compromise Hardware Supply Chain",
+        "description": "Adversaries may manipulate hardware components in products prior to receipt by a final consumer for the purpose of data or system compromise. By modifying hardware or firmware in the supply chain, adversaries can insert a backdoor into consumer networks that may be difficult to detect and give the adversary a high degree of control over the system."
+    },
+    {
+        "id": "T1474.003",
+        "name": "Compromise Software Supply Chain",
+        "description": "Adversaries may manipulate application software prior to receipt by a final consumer for the purpose of data or system compromise. Supply chain compromise of software can take place in a number of ways, including manipulation of the application source code, manipulation of the update/distribution mechanism for that software, or replacing compiled releases with a modified version."
+    },
+    {
+        "id": "T1426",
+        "name": "System Information Discovery",
+        "description": "Adversaries may attempt to get detailed information about a device\u2019s operating system and hardware, including versions, patches, and architecture. Adversaries may use the information from System Information Discovery during automated discovery to shape follow-on behaviors, including whether or not to fully infects the target and/or attempts specific actions."
+    },
+    {
+        "id": "T1422",
+        "name": "System Network Configuration Discovery",
+        "description": "Adversaries may look for details about the network configuration and settings, such as IP and/or MAC addresses, of operating systems they access or through information discovery of remote systems."
+    },
+    {
+        "id": "T1421",
+        "name": "System Network Connections Discovery",
+        "description": "Adversaries may attempt to get a listing of network connections to or from the compromised device they are currently accessing or from remote systems by querying for information over the network."
+    },
+    {
+        "id": "T1512",
+        "name": "Video Capture",
+        "description": "An adversary can leverage a device\u2019s cameras to gather information by capturing video recordings. Images may also be captured, potentially in specified intervals, in lieu of video files."
+    },
+    {
+        "id": "T1633",
+        "name": "Virtualization/Sandbox Evasion",
+        "description": "Adversaries may employ various means to detect and avoid virtualization and analysis environments. This may include changing behaviors after checking for the presence of artifacts indicative of a virtual machine environment (VME) or sandbox. If the adversary detects a VME, they may alter their malware\u2019s behavior to disengage from the victim or conceal the core functions of the payload. They may also search for VME artifacts before dropping further payloads. Adversaries may use the information learned from Virtualization/Sandbox Evasion during automated discovery to shape follow-on behaviors."
+    },
+    {
+        "id": "T1633.001",
+        "name": "System Checks",
+        "description": "Adversaries may employ various system checks to detect and avoid virtualization and analysis environments. This may include changing behavior after checking for the presence of artifacts indicative of a virtual environment or sandbox. If the adversary detects a virtual environment, they may alter their malware\u2019s behavior to disengage from the victim or conceal the core functions of the implant. They may also search for virtualization artifacts before dropping secondary or additional payloads."
+    },
+    {
+        "id": "T1481",
+        "name": "Web Service",
+        "description": "Adversaries may use an existing, legitimate external Web service as a means for relaying data to/from a compromised system. Popular websites and social media, acting as a mechanism for C2, may give a significant amount of cover. This is due to the likelihood that hosts within a network are already communicating with them prior to a compromise. Using common services, such as those offered by Google or Twitter, makes it easier for adversaries to hide in expected noise. Web service providers commonly use SSL/TLS encryption, giving adversaries an added level of protection."
+    },
+    {
+        "id": "T1481.001",
+        "name": "Dead Drop Resolver",
+        "description": "Adversaries may use an existing, legitimate external Web service to host information that points to additional command and control (C2) infrastructure. Adversaries may post content, known as a dead drop resolver, on Web services with embedded (and often obfuscated/encoded) domains or IP addresses. Once infected, victims will reach out to and be redirected by these resolvers."
+    },
+    {
+        "id": "T1481.002",
+        "name": "Bidirectional Communication",
+        "description": "Adversaries may use an existing, legitimate external Web service channel as a means for sending commands to and receiving output from a compromised system. Compromised systems may leverage popular websites and social media to host command and control (C2) instructions. Those infected systems can then send the output from those commands back over that Web service channel. The return traffic may occur in a variety of ways, depending on the Web service being utilized. For example, the return traffic may take the form of the compromised system posting a comment on a forum, issuing a pull request to development project, updating a document hosted on a Web service, or by sending a Tweet."
+    },
+    {
+        "id": "T1481.003",
+        "name": "One-Way Communication",
+        "description": "Adversaries may use an existing, legitimate external Web service channel as a means for sending commands to a compromised system without receiving return output. Compromised systems may leverage popular websites and social media to host command and control (C2) instructions. Those infected systems may opt to send the output from those commands back over a different C2 channel, including to another distinct Web service. Alternatively, compromised systems may return no output at all in cases where adversaries want to send instructions to systems and do not want a response."
+    }
+]

@@ -1,0 +1,21 @@
+What went well in the sprint?
+
+Team displayed strong synergy, enhancing the development process.
+Proactively integrated Auth0, enhancing software security and reliability.
+Addressed the Vite import bug, streamlining the team's workflow.
+Emphasized quality assurance with comprehensive test cases for Auth0.
+Prioritized user experience with homepage redesign and user-focused developments.
+
+What could be improved?
+
+Encountered a delay due to an unexpected GitHub license issue, emphasizing the need for better contingency planning.
+While making progress in annotation functionality, a more timely completion could have accelerated our progress.
+Multiple academic deadlines for team members highlighted the need for frequent progress checks and improved task allocation.
+Continuous user feedback sessions can further enhance the user interface.
+
+What will the group commit to improve in the next sprint?
+
+Focus on refining task allocation, matching tasks to individual expertise.
+Plan to introduce regular "Check-in Meetings" to ensure alignment and tackle potential challenges.
+Prioritize the delivery of basic visualization functionality.
+Adopt an iterative design approach, focusing on frequent user testing to gather insights and make the software more user-centric.

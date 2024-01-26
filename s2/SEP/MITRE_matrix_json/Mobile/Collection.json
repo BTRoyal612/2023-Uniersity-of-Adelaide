@@ -1,0 +1,129 @@
+{
+    "id": "TA0035",
+    "name": "Collection",
+    "description": "The adversary is trying to gather data of interest to their goal.",
+    "techniques":
+    [
+        {
+            "id": "T1517",
+            "name": "Access Notifications",
+            "description": "Adversaries may collect data within notifications sent by the operating system or other applications. Notifications may contain sensitive data such as one-time authentication codes sent over SMS, email, or other mediums. In the case of Credential Access, adversaries may attempt to intercept one-time code sent to the device. Adversaries can also dismiss notifications to prevent the user from noticing that the notification has arrived and can trigger action buttons contained within notifications.",
+            "sub-techniques": []
+        },
+        {
+            "id": "T1638",
+            "name": "Adversary-in-the-Middle",
+            "description": "Adversaries may attempt to position themselves between two or more networked devices to support follow-on behaviors such as Transmitted Data Manipulation or Endpoint Denial of Service.",
+            "sub-techniques": []
+        },
+        {
+            "id": "T1532",
+            "name": "Archive Collected Data",
+            "description": "Adversaries may compress and/or encrypt data that is collected prior to exfiltration. Compressing data can help to obfuscate its contents and minimize use of network resources. Encryption can be used to hide information that is being exfiltrated from detection or make exfiltration less conspicuous upon inspection by a defender.",
+            "sub-techniques": []
+        },
+        {
+            "id": "T1429",
+            "name": "Audio Capture",
+            "description": "Adversaries may capture audio to collect information by leveraging standard operating system APIs of a mobile device. Examples of audio information adversaries may target include user conversations, surroundings, phone calls, or other sensitive information.",
+            "sub-techniques": []
+        },
+        {
+            "id": "T1616",
+            "name": "Call Control",
+            "description": "Adversaries may make, forward, or block phone calls without user authorization. This could be used for adversary goals such as audio surveillance, blocking or forwarding calls from the device owner, or C2 communication.",
+            "sub-techniques": []
+        },
+        {
+            "id": "T1414",
+            "name": "Clipboard Data",
+            "description": "Adversaries may abuse clipboard manager APIs to obtain sensitive information copied to the device clipboard. For example, passwords being copied and pasted from a password manager application could be captured by a malicious application installed on the device.",
+            "sub-techniques": []
+        },
+        {
+            "id": "T1533",
+            "name": "Data from Local System",
+            "description": "Adversaries may search local system sources, such as file systems or local databases, to find files of interest and sensitive data prior to exfiltration.",
+            "sub-techniques": []
+        },
+        {
+            "id": "T1417",
+            "name": "Input Capture",
+            "description": "Adversaries may use methods of capturing user input to obtain credentials or collect information. During normal device usage, users often provide credentials to various locations, such as login pages/portals or system dialog boxes. Input capture mechanisms may be transparent to the user (e.g. Keylogging) or rely on deceiving the user into providing input into what they believe to be a genuine application prompt (e.g. GUI Input Capture).",
+            "sub-techniques": [
+                {
+                    "id": "T1417.001",
+                    "name": "Keylogging",
+                    "description": "Adversaries may log user keystrokes to intercept credentials or other information from the user as the user types them."
+                },
+                {
+                    "id": "T1417.002",
+                    "name": "GUI Input Capture",
+                    "description": "Adversaries may mimic common operating system GUI components to prompt users for sensitive information with a seemingly legitimate prompt. The operating system and installed applications often have legitimate needs to prompt the user for sensitive information such as account credentials, bank account information, or Personally Identifiable Information (PII). Compared to traditional PCs, the constrained display size of mobile devices may impair the ability to provide users with contextual information, making users more susceptible to this technique\u2019s use."
+                }
+            ]
+        },
+        {
+            "id": "T1430",
+            "name": "Location Tracking",
+            "description": "Adversaries may track a device\u2019s physical location through use of standard operating system APIs via malicious or exploited applications on the compromised device.",
+            "sub-techniques": [
+                {
+                    "id": "T1430.001",
+                    "name": "Remote Device Management Services",
+                    "description": "An adversary may use access to cloud services (e.g. Google's Android Device Manager or Apple iCloud's Find my iPhone) or to an enterprise mobility management (EMM)/mobile device management (MDM) server console to track the location of mobile devices managed by the service."
+                },
+                {
+                    "id": "T1430.002",
+                    "name": "Impersonate SS7 Nodes",
+                    "description": "Adversaries may exploit the lack of authentication in signaling system network nodes to track the to track the location of mobile devices by impersonating a node."
+                }
+            ]
+        },
+        {
+            "id": "T1636",
+            "name": "Protected User Data",
+            "description": "Adversaries may utilize standard operating system APIs to collect data from permission-backed data stores on a device, such as the calendar or contact list. These permissions need to be declared ahead of time. On Android, they must be included in the application\u2019s manifest. On iOS, they must be included in the application\u2019s Info.plist file.",
+            "sub-techniques": [
+                {
+                    "id": "T1636.001",
+                    "name": "Calendar Entries",
+                    "description": "Adversaries may utilize standard operating system APIs to gather calendar entry data. On Android, this can be accomplished using the Calendar Content Provider. On iOS, this can be accomplished using the EventKit framework."
+                },
+                {
+                    "id": "T1636.002",
+                    "name": "Call Log",
+                    "description": "Adversaries may utilize standard operating system APIs to gather call log data. On Android, this can be accomplished using the Call Log Content Provider. iOS provides no standard API to access the call log."
+                },
+                {
+                    "id": "T1636.003",
+                    "name": "Contact List",
+                    "description": "Adversaries may utilize standard operating system APIs to gather contact list data. On Android, this can be accomplished using the Contacts Content Provider. On iOS, this can be accomplished using the Contacts framework."
+                },
+                {
+                    "id": "T1636.004",
+                    "name": "SMS Messages",
+                    "description": "Adversaries may utilize standard operating system APIs to gather SMS messages. On Android, this can be accomplished using the SMS Content Provider. iOS provides no standard API to access SMS messages."
+                }
+            ]
+        },
+        {
+            "id": "T1513",
+            "name": "Screen Capture",
+            "description": "Adversaries may use screen capture to collect additional information about a target device, such as applications running in the foreground, user data, credentials, or other sensitive information. Applications running in the background can capture screenshots or videos of another application running in the foreground by using the Android MediaProjectionManager (generally requires the device user to grant consent). Background applications can also use Android accessibility services to capture screen contents being displayed by a foreground application. An adversary with root access or Android Debug Bridge (adb) access could call the Android screencap or screenrecord commands.",
+            "sub-techniques": []
+        },
+        {
+            "id": "T1409",
+            "name": "Stored Application Data",
+            "description": "Adversaries may try to access and collect application data resident on the device. Adversaries often target popular applications, such as Facebook, WeChat, and Gmail.",
+            "sub-techniques": []
+        },
+        {
+            "id": "T1512",
+            "name": "Video Capture",
+            "description": "An adversary can leverage a device\u2019s cameras to gather information by capturing video recordings. Images may also be captured, potentially in specified intervals, in lieu of video files.",
+            "sub-techniques": []
+        }
+    ]
+}
